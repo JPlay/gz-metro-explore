@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f7d44c">
+<meta name="description" content="一号线 · 方块奇境：坐上黄色的广州地铁 1 号线，穿过会变形的方块城市，解开四个车站的视错觉小谜题。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7d44c'/%3E%3Cpath d='M32 10 54 22v20L32 54 10 42V22z' fill='%23fff6dc'/%3E%3Cpath d='M32 10 54 22 32 34 10 22z' fill='%23ffffff'/%3E%3Cpath d='M32 34v20L10 42V22z' fill='%23e9b93a'/%3E%3C/svg%3E">
+<title>一号线 · 方块奇境</title>
+<link rel="stylesheet" href="css/app.css?v=1.0.0">
+</head>
+<body>
+<div id="app">
+  <canvas id="scene" aria-label="游戏画面：点地面让小乘客走过去，拖动发光的机关"></canvas>
+
+  <!-- 顶部 HUD：图标为主，文字为辅 -->
+  <header id="hud" hidden>
+    <button id="btnHome" class="round" aria-label="回到城市"><span class="ico">⌂</span><small data-i18n="home"></small></button>
+    <div id="stationBadge" hidden><i class="dot"></i><b id="stationName"></b><small id="stationSub"></small></div>
+    <div class="right">
+      <button id="btnHint" class="round" aria-label="提示"><span class="ico">✦</span><small data-i18n="hint"></small></button>
+      <button id="btnSound" class="round" aria-label="声音"><span class="ico" id="soundIco">♪</span><small data-i18n="sound"></small></button>
+      <button id="btnLang" class="round" aria-label="语言"><span class="ico" id="langIco">普</span><small data-i18n="lang"></small></button>
+    </div>
+  </header>
+
+  <!-- 标题页 -->
+  <section id="title" class="overlay" hidden>
+    <div class="title-card">
+      <div class="logo" aria-hidden="true"><i></i><i></i><i></i></div>
+      <h1 data-i18n="title"></h1>
+      <p data-i18n="subtitle"></p>
+      <button id="btnStart" class="big-go" aria-label="出发"><span class="go-ico">▶</span><b data-i18n="start"></b></button>
+      <div class="title-langs" role="group" aria-label="语言">
+        <button data-lang="zh">普</button><button data-lang="yue">粤</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 城市枢纽：车站选择 -->
+  <nav id="picker" hidden aria-label="选择车站"></nav>
+
+  <!-- 列车行驶中 -->
+  <div id="rideBar" hidden>
+    <div id="rideLine"></div>
+    <button id="btnSkip" class="round" hidden aria-label="快进"><span class="ico">»</span><small data-i18n="skip"></small></button>
+  </div>
+
+  <!-- 广播字幕 -->
+  <div id="caption" aria-live="polite" hidden><span class="lang"></span><span class="text"></span></div>
+
+  <!-- 提示手势（DOM 层，跟随 3D 位置） -->
+  <div id="hintLayer" aria-hidden="true"><div id="hintHand">☝</div><div id="hintRing"></div></div>
+
+  <!-- 完成庆祝 -->
+  <section id="celebrate" class="overlay" hidden>
+    <div class="cele-card">
+      <div class="stars" id="celeStars"></div>
+      <h2 data-i18n="allDone"></h2>
+      <button id="btnAgain" class="big-go"><span class="go-ico">↻</span><b data-i18n="again"></b></button>
+    </div>
+  </section>
+
+  <div id="fade"></div>
+
+  <!-- 启动加载 / 错误 -->
+  <section id="boot" class="overlay">
+    <div class="boot-card">
+      <div class="logo spin" aria-hidden="true"><i></i><i></i><i></i></div>
+      <p id="bootText">正在准备方块城市…</p>
+    </div>
+  </section>
+  <section id="fatal" class="overlay" hidden role="alert">
+    <div class="boot-card"><h2>城市暂时没搭好</h2><p id="fatalText"></p><button class="big-go" onclick="location.reload()"><span class="go-ico">↻</span><b>再试一次</b></button></div>
+  </section>
+</div>
+<!-- three.js 来源自动回退：jsDelivr → unpkg → 同源 vendor；然后动态写入 import map 并加载 js/main.js -->
+<script src="js/boot.js?v=1.0.0"></script>
+</body>
+</html>

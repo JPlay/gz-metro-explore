@@ -1,0 +1,1872 @@
+{
+  "version": 2,
+  "languages": [
+    "zh",
+    "yue",
+    "en"
+  ],
+  "languageNames": {
+    "zh": "普通话",
+    "yue": "粤语",
+    "en": "英语"
+  },
+  "assets": [
+    {
+      "id": "sfx.footstep",
+      "file": "sfx/footstep.mp3",
+      "group": "sfx",
+      "label": "脚步 · 瓷砖1",
+      "duration": 0.39,
+      "bytes": 3885,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.footstep2",
+      "file": "sfx/footstep2.mp3",
+      "group": "sfx",
+      "label": "脚步 · 瓷砖2",
+      "duration": 0.39,
+      "bytes": 3885,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.footstep3",
+      "file": "sfx/footstep3.mp3",
+      "group": "sfx",
+      "label": "脚步 · 瓷砖3",
+      "duration": 0.39,
+      "bytes": 3885,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.footstep4",
+      "file": "sfx/footstep4.mp3",
+      "group": "sfx",
+      "label": "脚步 · 瓷砖4",
+      "duration": 0.39,
+      "bytes": 3885,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.gateBeep",
+      "file": "sfx/gateBeep.mp3",
+      "group": "sfx",
+      "label": "刷票闸机 · 嘀",
+      "duration": 0.18,
+      "bytes": 2157,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.securityBeep",
+      "file": "sfx/securityBeep.mp3",
+      "group": "sfx",
+      "label": "安检确认",
+      "duration": 0.65,
+      "bytes": 5997,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.ticketMachine",
+      "file": "sfx/ticketMachine.mp3",
+      "group": "sfx",
+      "label": "售票机 · 确认与出票",
+      "duration": 1.1,
+      "bytes": 9453,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.tokenDrop",
+      "file": "sfx/tokenDrop.mp3",
+      "group": "sfx",
+      "label": "绿色票币 · 投币回收",
+      "duration": 0.9,
+      "bytes": 7917,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.doorChime",
+      "file": "sfx/doorChime.mp3",
+      "group": "sfx",
+      "label": "关门 · 广州1号线双音警示",
+      "duration": 3.62,
+      "bytes": 29613,
+      "loop": false,
+      "provenance": "original resynthesis; measured reference BV1vA8ozkEC4 ~860/645Hz, .88s period"
+    },
+    {
+      "id": "sfx.horn",
+      "file": "sfx/horn.mp3",
+      "group": "sfx",
+      "label": "列车气笛 · 手动试听",
+      "duration": 1.55,
+      "bytes": 16365,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "ambience.street",
+      "file": "ambience/street.mp3",
+      "group": "ambience",
+      "label": "地面 · 中国城市车流人声",
+      "duration": 28.45,
+      "bytes": 342477,
+      "loop": true,
+      "provenance": "CC0 lastraindrop 757820 + original ventilation"
+    },
+    {
+      "id": "ambience.concourse",
+      "file": "ambience/concourse.mp3",
+      "group": "ambience",
+      "label": "站厅 · 混响人声与远处闸机",
+      "duration": 28.45,
+      "bytes": 342477,
+      "loop": true,
+      "provenance": "CC0 lastraindrop 757820 + original station acoustics"
+    },
+    {
+      "id": "ambience.platform",
+      "file": "ambience/platform.mp3",
+      "group": "ambience",
+      "label": "站台 · 空旷混响与通风",
+      "duration": 28.45,
+      "bytes": 342477,
+      "loop": true,
+      "provenance": "CC0 be_a_hero_not_a_patriot 430984 + original ventilation"
+    },
+    {
+      "id": "ambience.train",
+      "file": "ambience/train.mp3",
+      "group": "ambience",
+      "label": "车厢 · 空调与轻微人声",
+      "duration": 28.45,
+      "bytes": 342477,
+      "loop": true,
+      "provenance": "CC0 lastraindrop 757820 + original carriage acoustics"
+    },
+    {
+      "id": "train.motor",
+      "file": "train/motor.mp3",
+      "group": "train",
+      "label": "牵引 · 电机与逆变器",
+      "duration": 8.45,
+      "bytes": 102573,
+      "loop": true,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.roll",
+      "file": "train/roll.mp3",
+      "group": "train",
+      "label": "轮轨 · 真实行驶纹理",
+      "duration": 8.45,
+      "bytes": 102573,
+      "loop": true,
+      "provenance": "CC0 moxobna 28205, 150s filtered excerpt + original low rail resonance"
+    },
+    {
+      "id": "train.joints",
+      "file": "train/joints.mp3",
+      "group": "train",
+      "label": "接缝 · 转向架双击",
+      "duration": 8.45,
+      "bytes": 102573,
+      "loop": true,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.brake",
+      "file": "train/brake.mp3",
+      "group": "train",
+      "label": "制动 · 钢轮轻微尖声",
+      "duration": 8.45,
+      "bytes": 102573,
+      "loop": true,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.approach",
+      "file": "train/approach.mp3",
+      "group": "train",
+      "label": "列车进站 · 风压与制动",
+      "duration": 15.0,
+      "bytes": 180909,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.depart",
+      "file": "train/depart.mp3",
+      "group": "train",
+      "label": "列车离站 · 牵引与远去",
+      "duration": 13.0,
+      "bytes": 157005,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "voice.next.gyq.zh",
+      "file": "voice/next-gyq-zh.mp3",
+      "group": "voice",
+      "label": "公园前 · 下一站",
+      "lang": "zh",
+      "text": "下一站，公园前。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 1.648,
+      "bytes": 13869
+    },
+    {
+      "id": "voice.next.gyq.yue",
+      "file": "voice/next-gyq-yue.mp3",
+      "group": "voice",
+      "label": "公园前 · 下一站",
+      "lang": "yue",
+      "text": "下一站，公园前。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 1.972,
+      "bytes": 16557
+    },
+    {
+      "id": "voice.next.gyq.en",
+      "file": "voice/next-gyq-en.mp3",
+      "group": "voice",
+      "label": "公园前 · 下一站",
+      "lang": "en",
+      "text": "The next station is Gongyuanqian.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 2.366,
+      "bytes": 19629
+    },
+    {
+      "id": "voice.arrive.gyq.zh",
+      "file": "voice/arrive-gyq-zh.mp3",
+      "group": "voice",
+      "label": "公园前 · 到站",
+      "lang": "zh",
+      "text": "列车即将到达公园前站，请小心列车与站台之间的空隙。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 5.409,
+      "bytes": 44013
+    },
+    {
+      "id": "voice.arrive.gyq.yue",
+      "file": "voice/arrive-gyq-yue.mp3",
+      "group": "voice",
+      "label": "公园前 · 到站",
+      "lang": "yue",
+      "text": "列车即将到达公园前站，请小心列车同站台之间嘅空隙。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 6.13,
+      "bytes": 49773
+    },
+    {
+      "id": "voice.arrive.gyq.en",
+      "file": "voice/arrive-gyq-en.mp3",
+      "group": "voice",
+      "label": "公园前 · 到站",
+      "lang": "en",
+      "text": "The train is arriving at Gongyuanqian. Please mind the gap between the train and the platform.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 5.402,
+      "bytes": 44013
+    },
+    {
+      "id": "voice.welcome.gyq.zh",
+      "file": "voice/welcome-gyq-zh.mp3",
+      "group": "voice",
+      "label": "公园前 · 站台欢迎",
+      "lang": "zh",
+      "text": "欢迎光临公园前站。请排队候车，先下后上。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 3.725,
+      "bytes": 30573
+    },
+    {
+      "id": "voice.welcome.gyq.yue",
+      "file": "voice/welcome-gyq-yue.mp3",
+      "group": "voice",
+      "label": "公园前 · 站台欢迎",
+      "lang": "yue",
+      "text": "欢迎光临公园前站。请排队候车，先落后上。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 4.283,
+      "bytes": 34989
+    },
+    {
+      "id": "voice.welcome.gyq.en",
+      "file": "voice/welcome-gyq-en.mp3",
+      "group": "voice",
+      "label": "公园前 · 站台欢迎",
+      "lang": "en",
+      "text": "Welcome to Gongyuanqian station. Please line up for the train. Let the passengers get off first before you get on.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 6.684,
+      "bytes": 54189
+    },
+    {
+      "id": "voice.next.njs.zh",
+      "file": "voice/next-njs-zh.mp3",
+      "group": "voice",
+      "label": "农讲所 · 下一站",
+      "lang": "zh",
+      "text": "下一站，农讲所。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 1.881,
+      "bytes": 15789
+    },
+    {
+      "id": "voice.next.njs.yue",
+      "file": "voice/next-njs-yue.mp3",
+      "group": "voice",
+      "label": "农讲所 · 下一站",
+      "lang": "yue",
+      "text": "下一站，农讲所。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 2.287,
+      "bytes": 19053
+    },
+    {
+      "id": "voice.next.njs.en",
+      "file": "voice/next-njs-en.mp3",
+      "group": "voice",
+      "label": "农讲所 · 下一站",
+      "lang": "en",
+      "text": "The next station is Peasant Movement Institute.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 2.198,
+      "bytes": 18285
+    },
+    {
+      "id": "voice.arrive.njs.zh",
+      "file": "voice/arrive-njs-zh.mp3",
+      "group": "voice",
+      "label": "农讲所 · 到站",
+      "lang": "zh",
+      "text": "列车即将到达农讲所站，请小心列车与站台之间的空隙。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 4.524,
+      "bytes": 36909
+    },
+    {
+      "id": "voice.arrive.njs.yue",
+      "file": "voice/arrive-njs-yue.mp3",
+      "group": "voice",
+      "label": "农讲所 · 到站",
+      "lang": "yue",
+      "text": "列车即将到达农讲所站，请小心列车同站台之间嘅空隙。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 5.327,
+      "bytes": 43245
+    },
+    {
+      "id": "voice.arrive.njs.en",
+      "file": "voice/arrive-njs-en.mp3",
+      "group": "voice",
+      "label": "农讲所 · 到站",
+      "lang": "en",
+      "text": "The train is arriving at Peasant Movement Institute. Please mind the gap between the train and the platform.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 6.188,
+      "bytes": 50157
+    },
+    {
+      "id": "voice.welcome.njs.zh",
+      "file": "voice/welcome-njs-zh.mp3",
+      "group": "voice",
+      "label": "农讲所 · 站台欢迎",
+      "lang": "zh",
+      "text": "欢迎光临农讲所站。请排队候车，先下后上。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 4.097,
+      "bytes": 33453
+    },
+    {
+      "id": "voice.welcome.njs.yue",
+      "file": "voice/welcome-njs-yue.mp3",
+      "group": "voice",
+      "label": "农讲所 · 站台欢迎",
+      "lang": "yue",
+      "text": "欢迎光临农讲所站。请排队候车，先落后上。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 5.244,
+      "bytes": 42669
+    },
+    {
+      "id": "voice.welcome.njs.en",
+      "file": "voice/welcome-njs-en.mp3",
+      "group": "voice",
+      "label": "农讲所 · 站台欢迎",
+      "lang": "en",
+      "text": "Welcome to Peasant Movement Institute station. Please line up for the train. Let the passengers get off first before you get on.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 6.204,
+      "bytes": 50349
+    },
+    {
+      "id": "voice.next.lsly.zh",
+      "file": "voice/next-lsly-zh.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 下一站",
+      "lang": "zh",
+      "text": "下一站，烈士陵园。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.044,
+      "bytes": 17133
+    },
+    {
+      "id": "voice.next.lsly.yue",
+      "file": "voice/next-lsly-yue.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 下一站",
+      "lang": "yue",
+      "text": "下一站，烈士陵园。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 2.05,
+      "bytes": 17133
+    },
+    {
+      "id": "voice.next.lsly.en",
+      "file": "voice/next-lsly-en.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 下一站",
+      "lang": "en",
+      "text": "The next station is Martyrs' Park.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 1.394,
+      "bytes": 11949
+    },
+    {
+      "id": "voice.arrive.lsly.zh",
+      "file": "voice/arrive-lsly-zh.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 到站",
+      "lang": "zh",
+      "text": "列车即将到达烈士陵园站，请小心列车与站台之间的空隙。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 5.405,
+      "bytes": 44013
+    },
+    {
+      "id": "voice.arrive.lsly.yue",
+      "file": "voice/arrive-lsly-yue.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 到站",
+      "lang": "yue",
+      "text": "列车即将到达烈士陵园站，请小心列车同站台之间嘅空隙。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 5.486,
+      "bytes": 44589
+    },
+    {
+      "id": "voice.arrive.lsly.en",
+      "file": "voice/arrive-lsly-en.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 到站",
+      "lang": "en",
+      "text": "The train is arriving at Martyrs' Park. Please mind the gap between the train and the platform.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 4.68,
+      "bytes": 38061
+    },
+    {
+      "id": "voice.welcome.lsly.zh",
+      "file": "voice/welcome-lsly-zh.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 站台欢迎",
+      "lang": "zh",
+      "text": "欢迎光临烈士陵园站。请排队候车，先下后上。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 3.397,
+      "bytes": 27885
+    },
+    {
+      "id": "voice.welcome.lsly.yue",
+      "file": "voice/welcome-lsly-yue.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 站台欢迎",
+      "lang": "yue",
+      "text": "欢迎光临烈士陵园站。请排队候车，先落后上。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.969,
+      "bytes": 32493
+    },
+    {
+      "id": "voice.welcome.lsly.en",
+      "file": "voice/welcome-lsly-en.mp3",
+      "group": "voice",
+      "label": "烈士陵园 · 站台欢迎",
+      "lang": "en",
+      "text": "Welcome to Martyrs' Park station. Please line up for the train. Let the passengers get off first before you get on.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 5.403,
+      "bytes": 44013
+    },
+    {
+      "id": "voice.next.dsk.zh",
+      "file": "voice/next-dsk-zh.mp3",
+      "group": "voice",
+      "label": "东山口 · 下一站",
+      "lang": "zh",
+      "text": "下一站，东山口，可换乘六号线。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 3.086,
+      "bytes": 25389
+    },
+    {
+      "id": "voice.next.dsk.yue",
+      "file": "voice/next-dsk-yue.mp3",
+      "group": "voice",
+      "label": "东山口 · 下一站",
+      "lang": "yue",
+      "text": "下一站，东山口，可换乘六号线。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.891,
+      "bytes": 31917
+    },
+    {
+      "id": "voice.next.dsk.en",
+      "file": "voice/next-dsk-en.mp3",
+      "group": "voice",
+      "label": "东山口 · 下一站",
+      "lang": "en",
+      "text": "The next station is Dongshankou, the interchange with Line Six.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 3.962,
+      "bytes": 32493
+    },
+    {
+      "id": "voice.arrive.dsk.zh",
+      "file": "voice/arrive-dsk-zh.mp3",
+      "group": "voice",
+      "label": "东山口 · 到站",
+      "lang": "zh",
+      "text": "列车即将到达东山口站，请小心列车与站台之间的空隙。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 5.247,
+      "bytes": 42669
+    },
+    {
+      "id": "voice.arrive.dsk.yue",
+      "file": "voice/arrive-dsk-yue.mp3",
+      "group": "voice",
+      "label": "东山口 · 到站",
+      "lang": "yue",
+      "text": "列车即将到达东山口站，请小心列车同站台之间嘅空隙。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 4.525,
+      "bytes": 36909
+    },
+    {
+      "id": "voice.arrive.dsk.en",
+      "file": "voice/arrive-dsk-en.mp3",
+      "group": "voice",
+      "label": "东山口 · 到站",
+      "lang": "en",
+      "text": "The train is arriving at Dongshankou. Please mind the gap between the train and the platform.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 6.276,
+      "bytes": 50925
+    },
+    {
+      "id": "voice.welcome.dsk.zh",
+      "file": "voice/welcome-dsk-zh.mp3",
+      "group": "voice",
+      "label": "东山口 · 站台欢迎",
+      "lang": "zh",
+      "text": "欢迎光临东山口站。请排队候车，先下后上。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 4.038,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.welcome.dsk.yue",
+      "file": "voice/welcome-dsk-yue.mp3",
+      "group": "voice",
+      "label": "东山口 · 站台欢迎",
+      "lang": "yue",
+      "text": "欢迎光临东山口站。请排队候车，先落后上。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 4.758,
+      "bytes": 38829
+    },
+    {
+      "id": "voice.welcome.dsk.en",
+      "file": "voice/welcome-dsk-en.mp3",
+      "group": "voice",
+      "label": "东山口 · 站台欢迎",
+      "lang": "en",
+      "text": "Welcome to Dongshankou station. Please line up for the train. Let the passengers get off first before you get on.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 5.396,
+      "bytes": 43821
+    },
+    {
+      "id": "voice.destination.up.zh",
+      "file": "voice/destination-up-zh.mp3",
+      "group": "voice",
+      "label": "广州东站 · 终点方向",
+      "lang": "zh",
+      "text": "本次列车终点站为，广州东站。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.93,
+      "bytes": 24237
+    },
+    {
+      "id": "voice.destination.up.yue",
+      "file": "voice/destination-up-yue.mp3",
+      "group": "voice",
+      "label": "广州东站 · 终点方向",
+      "lang": "yue",
+      "text": "本次列车终点站为，广州东站。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.323,
+      "bytes": 27309
+    },
+    {
+      "id": "voice.destination.up.en",
+      "file": "voice/destination-up-en.mp3",
+      "group": "voice",
+      "label": "广州东站 · 终点方向",
+      "lang": "en",
+      "text": "The destination of this train is Guangzhou East Railway Station.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 3.717,
+      "bytes": 30381
+    },
+    {
+      "id": "voice.platform.up.1.zh",
+      "file": "voice/platform-up-1-zh.mp3",
+      "group": "voice",
+      "label": "1站台 · 广州东站方向",
+      "lang": "zh",
+      "text": "一站台，广州东站方向列车即将进站。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 4.044,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.platform.up.1.yue",
+      "file": "voice/platform-up-1-yue.mp3",
+      "group": "voice",
+      "label": "1站台 · 广州东站方向",
+      "lang": "yue",
+      "text": "一站台，广州东站方向列车即将进站。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.644,
+      "bytes": 29805
+    },
+    {
+      "id": "voice.platform.up.1.en",
+      "file": "voice/platform-up-1-en.mp3",
+      "group": "voice",
+      "label": "1站台 · 广州东站方向",
+      "lang": "en",
+      "text": "The train bound for Guangzhou East Railway Station is approaching at Platform 1.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 4.04,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.platform.up.2.zh",
+      "file": "voice/platform-up-2-zh.mp3",
+      "group": "voice",
+      "label": "2站台 · 广州东站方向",
+      "lang": "zh",
+      "text": "二站台，广州东站方向列车即将进站。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 3.399,
+      "bytes": 27885
+    },
+    {
+      "id": "voice.platform.up.2.yue",
+      "file": "voice/platform-up-2-yue.mp3",
+      "group": "voice",
+      "label": "2站台 · 广州东站方向",
+      "lang": "yue",
+      "text": "二站台，广州东站方向列车即将进站。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 4.047,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.platform.up.2.en",
+      "file": "voice/platform-up-2-en.mp3",
+      "group": "voice",
+      "label": "2站台 · 广州东站方向",
+      "lang": "en",
+      "text": "The train bound for Guangzhou East Railway Station is approaching at Platform 2.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 4.281,
+      "bytes": 34989
+    },
+    {
+      "id": "voice.terminal.up.zh",
+      "file": "voice/terminal-up-zh.mp3",
+      "group": "voice",
+      "label": "广州东站 · 终点站",
+      "lang": "zh",
+      "text": "下一站是本次列车的终点站，广州东站。请全部乘客带齐行李物品在此站下车，欢迎再次乘坐广州地铁。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 9.964,
+      "bytes": 80493
+    },
+    {
+      "id": "voice.terminal.up.yue",
+      "file": "voice/terminal-up-yue.mp3",
+      "group": "voice",
+      "label": "广州东站 · 终点站",
+      "lang": "yue",
+      "text": "下一站系本次列车嘅终点站，广州东站。请全部乘客带齐行李物品喺呢一站落车，欢迎再次乘坐广州地铁。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 10.052,
+      "bytes": 81069
+    },
+    {
+      "id": "voice.terminal.up.en",
+      "file": "voice/terminal-up-en.mp3",
+      "group": "voice",
+      "label": "广州东站 · 终点站",
+      "lang": "en",
+      "text": "The next station is Guangzhou East Railway Station, the terminal of this journey. Please take all your belongings and leave the train. Thank you for travelling on Guangzhou Metro.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 10.043,
+      "bytes": 81069
+    },
+    {
+      "id": "voice.destination.down.zh",
+      "file": "voice/destination-down-zh.mp3",
+      "group": "voice",
+      "label": "西塱 · 终点方向",
+      "lang": "zh",
+      "text": "本次列车终点站为，西塱。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.522,
+      "bytes": 20973
+    },
+    {
+      "id": "voice.destination.down.yue",
+      "file": "voice/destination-down-yue.mp3",
+      "group": "voice",
+      "label": "西塱 · 终点方向",
+      "lang": "yue",
+      "text": "本次列车终点站为，西塱。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 2.123,
+      "bytes": 17709
+    },
+    {
+      "id": "voice.destination.down.en",
+      "file": "voice/destination-down-en.mp3",
+      "group": "voice",
+      "label": "西塱 · 终点方向",
+      "lang": "en",
+      "text": "The destination of this train is Xilang.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 2.273,
+      "bytes": 18861
+    },
+    {
+      "id": "voice.platform.down.1.zh",
+      "file": "voice/platform-down-1-zh.mp3",
+      "group": "voice",
+      "label": "1站台 · 西塱方向",
+      "lang": "zh",
+      "text": "一站台，西塱方向列车即将进站。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.84,
+      "bytes": 23469
+    },
+    {
+      "id": "voice.platform.down.1.yue",
+      "file": "voice/platform-down-1-yue.mp3",
+      "group": "voice",
+      "label": "1站台 · 西塱方向",
+      "lang": "yue",
+      "text": "一站台，西塱方向列车即将进站。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.486,
+      "bytes": 28653
+    },
+    {
+      "id": "voice.platform.down.1.en",
+      "file": "voice/platform-down-1-en.mp3",
+      "group": "voice",
+      "label": "1站台 · 西塱方向",
+      "lang": "en",
+      "text": "The train bound for Xilang is approaching at Platform 1.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 3.165,
+      "bytes": 25965
+    },
+    {
+      "id": "voice.platform.down.2.zh",
+      "file": "voice/platform-down-2-zh.mp3",
+      "group": "voice",
+      "label": "2站台 · 西塱方向",
+      "lang": "zh",
+      "text": "二站台，西塱方向列车即将进站。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 3.084,
+      "bytes": 25389
+    },
+    {
+      "id": "voice.platform.down.2.yue",
+      "file": "voice/platform-down-2-yue.mp3",
+      "group": "voice",
+      "label": "2站台 · 西塱方向",
+      "lang": "yue",
+      "text": "二站台，西塱方向列车即将进站。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.085,
+      "bytes": 25389
+    },
+    {
+      "id": "voice.platform.down.2.en",
+      "file": "voice/platform-down-2-en.mp3",
+      "group": "voice",
+      "label": "2站台 · 西塱方向",
+      "lang": "en",
+      "text": "The train bound for Xilang is approaching at Platform 2.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 4.034,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.terminal.down.zh",
+      "file": "voice/terminal-down-zh.mp3",
+      "group": "voice",
+      "label": "西塱 · 终点站",
+      "lang": "zh",
+      "text": "下一站是本次列车的终点站，西塱。请全部乘客带齐行李物品在此站下车，欢迎再次乘坐广州地铁。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 8.191,
+      "bytes": 66285
+    },
+    {
+      "id": "voice.terminal.down.yue",
+      "file": "voice/terminal-down-yue.mp3",
+      "group": "voice",
+      "label": "西塱 · 终点站",
+      "lang": "yue",
+      "text": "下一站系本次列车嘅终点站，西塱。请全部乘客带齐行李物品喺呢一站落车，欢迎再次乘坐广州地铁。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 10.364,
+      "bytes": 83565
+    },
+    {
+      "id": "voice.terminal.down.en",
+      "file": "voice/terminal-down-en.mp3",
+      "group": "voice",
+      "label": "西塱 · 终点站",
+      "lang": "en",
+      "text": "The next station is Xilang, the terminal of this journey. Please take all your belongings and leave the train. Thank you for travelling on Guangzhou Metro.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 8.999,
+      "bytes": 72621
+    },
+    {
+      "id": "voice.doorsClosing.zh",
+      "file": "voice/doorsClosing-zh.mp3",
+      "group": "voice",
+      "label": "车门即将关闭",
+      "lang": "zh",
+      "text": "车门即将关闭，请注意安全，谨防被夹。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 4.045,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.doorsClosing.yue",
+      "file": "voice/doorsClosing-yue.mp3",
+      "group": "voice",
+      "label": "车门即将关闭",
+      "lang": "yue",
+      "text": "车门即将关闭，请注意安全，谨防被夹。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 4.527,
+      "bytes": 36909
+    },
+    {
+      "id": "voice.doorsClosing.en",
+      "file": "voice/doorsClosing-en.mp3",
+      "group": "voice",
+      "label": "车门即将关闭",
+      "lang": "en",
+      "text": "The doors are closing. Please stand clear of the doors.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 3.647,
+      "bytes": 29805
+    },
+    {
+      "id": "voice.gap.zh",
+      "file": "voice/gap-zh.mp3",
+      "group": "voice",
+      "label": "请小心空隙",
+      "lang": "zh",
+      "text": "请小心列车与站台之间的空隙。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.445,
+      "bytes": 20205
+    },
+    {
+      "id": "voice.gap.yue",
+      "file": "voice/gap-yue.mp3",
+      "group": "voice",
+      "label": "请小心空隙",
+      "lang": "yue",
+      "text": "请小心列车同站台之间嘅空隙。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 2.528,
+      "bytes": 20973
+    },
+    {
+      "id": "voice.gap.en",
+      "file": "voice/gap-en.mp3",
+      "group": "voice",
+      "label": "请小心空隙",
+      "lang": "en",
+      "text": "Please mind the gap between the train and the platform.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 2.754,
+      "bytes": 22701
+    },
+    {
+      "id": "voice.transfer.gyq.zh",
+      "file": "voice/transfer-gyq-zh.mp3",
+      "group": "voice",
+      "label": "公园前 · 中部楼梯换乘2号线",
+      "lang": "zh",
+      "text": "请从列车前进方向的右门下车，中部楼梯换乘二号线。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 5.08,
+      "bytes": 41325
+    },
+    {
+      "id": "voice.transfer.gyq.yue",
+      "file": "voice/transfer-gyq-yue.mp3",
+      "group": "voice",
+      "label": "公园前 · 中部楼梯换乘2号线",
+      "lang": "yue",
+      "text": "请由列车前进方向嘅右门落车，中部楼梯换乘二号线。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 5.649,
+      "bytes": 45933
+    },
+    {
+      "id": "voice.transfer.gyq.en",
+      "file": "voice/transfer-gyq-en.mp3",
+      "group": "voice",
+      "label": "公园前 · 中部楼梯换乘2号线",
+      "lang": "en",
+      "text": "Please exit the train to the right. To transfer to Line Two, please take the stairs in the middle of the platform.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 5.8,
+      "bytes": 47085
+    },
+    {
+      "id": "voice.transfer.dsk.zh",
+      "file": "voice/transfer-dsk-zh.mp3",
+      "group": "voice",
+      "label": "东山口 · 换乘6号线",
+      "lang": "zh",
+      "text": "可换乘六号线。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 1.172,
+      "bytes": 10029
+    },
+    {
+      "id": "voice.transfer.dsk.yue",
+      "file": "voice/transfer-dsk-yue.mp3",
+      "group": "voice",
+      "label": "东山口 · 换乘6号线",
+      "lang": "yue",
+      "text": "可换乘六号线。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 1.327,
+      "bytes": 11373
+    },
+    {
+      "id": "voice.transfer.dsk.en",
+      "file": "voice/transfer-dsk-en.mp3",
+      "group": "voice",
+      "label": "东山口 · 换乘6号线",
+      "lang": "en",
+      "text": "The interchange with Line Six.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 1.318,
+      "bytes": 11181
+    },
+    {
+      "id": "voice.exit.left.zh",
+      "file": "voice/exit-left-zh.mp3",
+      "group": "voice",
+      "label": "左门下车",
+      "lang": "zh",
+      "text": "请从列车前进方向的左门下车。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.52,
+      "bytes": 20781
+    },
+    {
+      "id": "voice.exit.left.yue",
+      "file": "voice/exit-left-yue.mp3",
+      "group": "voice",
+      "label": "左门下车",
+      "lang": "yue",
+      "text": "请由列车前进方向嘅左门落车。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 3.008,
+      "bytes": 24813
+    },
+    {
+      "id": "voice.exit.left.en",
+      "file": "voice/exit-left-en.mp3",
+      "group": "voice",
+      "label": "左门下车",
+      "lang": "en",
+      "text": "Please exit the train to the left.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 1.714,
+      "bytes": 14445
+    },
+    {
+      "id": "voice.exit.right.zh",
+      "file": "voice/exit-right-zh.mp3",
+      "group": "voice",
+      "label": "右门下车",
+      "lang": "zh",
+      "text": "请从列车前进方向的右门下车。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "duration": 2.847,
+      "bytes": 23469
+    },
+    {
+      "id": "voice.exit.right.yue",
+      "file": "voice/exit-right-yue.mp3",
+      "group": "voice",
+      "label": "右门下车",
+      "lang": "yue",
+      "text": "请由列车前进方向嘅右门落车。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "duration": 2.849,
+      "bytes": 23469
+    },
+    {
+      "id": "voice.exit.right.en",
+      "file": "voice/exit-right-en.mp3",
+      "group": "voice",
+      "label": "右门下车",
+      "lang": "en",
+      "text": "Please exit the train to the right.",
+      "model": "qwen3-tts-flash",
+      "voice": "Jennifer",
+      "language_type": "English",
+      "duration": 1.662,
+      "bytes": 14061
+    },
+    {
+      "id": "voice.safety.escalator.zh",
+      "file": "voice/safety-escalator-zh.mp3",
+      "group": "voice",
+      "label": "扶梯 · 站稳握扶手",
+      "lang": "zh",
+      "text": "请站稳，并握紧黑色扶手带，请勿在扶梯口处停留。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "concourse",
+        "platform"
+      ],
+      "wordingEvidence": "historical PA wording documented in 2017 news; still consistent with operator safety guide",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": false,
+      "duration": 5.647,
+      "bytes": 45933
+    },
+    {
+      "id": "voice.safety.escalator.yue",
+      "file": "voice/safety-escalator-yue.mp3",
+      "group": "voice",
+      "label": "扶梯 · 站稳握扶手",
+      "lang": "yue",
+      "text": "请企稳，握紧黑色扶手带，唔好喺扶梯口停留。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "concourse",
+        "platform"
+      ],
+      "wordingEvidence": "historical PA wording documented in 2017 news; still consistent with operator safety guide",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": true,
+      "duration": 5.248,
+      "bytes": 42669
+    },
+    {
+      "id": "voice.safety.care.zh",
+      "file": "voice/safety-care-zh.mp3",
+      "group": "voice",
+      "label": "同行 · 照顾老人小孩",
+      "lang": "zh",
+      "text": "小心照顾同行的老人和小孩。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "concourse",
+        "platform"
+      ],
+      "wordingEvidence": "operator safety guide, escalator general guidance 1",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": false,
+      "duration": 1.96,
+      "bytes": 16365
+    },
+    {
+      "id": "voice.safety.care.yue",
+      "file": "voice/safety-care-yue.mp3",
+      "group": "voice",
+      "label": "同行 · 照顾老人小孩",
+      "lang": "yue",
+      "text": "请小心照顾同行嘅老人同小朋友。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "concourse",
+        "platform"
+      ],
+      "wordingEvidence": "operator safety guide, escalator general guidance 1",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": true,
+      "duration": 2.446,
+      "bytes": 20205
+    },
+    {
+      "id": "voice.safety.walk.zh",
+      "file": "voice/safety-walk-zh.mp3",
+      "group": "voice",
+      "label": "站内 · 请勿奔跑追逐",
+      "lang": "zh",
+      "text": "站内通行时请注意地面状况，严禁奔跑、追逐。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "concourse"
+      ],
+      "wordingEvidence": "operator safety guide, station passage 4",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": false,
+      "duration": 4.045,
+      "bytes": 33069
+    },
+    {
+      "id": "voice.safety.walk.yue",
+      "file": "voice/safety-walk-yue.mp3",
+      "group": "voice",
+      "label": "站内 · 请勿奔跑追逐",
+      "lang": "yue",
+      "text": "喺车站行路请留意地面情况，唔好奔跑同追逐。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "concourse"
+      ],
+      "wordingEvidence": "operator safety guide, station passage 4",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": true,
+      "duration": 5.09,
+      "bytes": 41517
+    },
+    {
+      "id": "voice.safety.queue.zh",
+      "file": "voice/safety-queue-zh.mp3",
+      "group": "voice",
+      "label": "站台 · 黄线后排队",
+      "lang": "zh",
+      "text": "请不要越出黄色安全线，请按地面标识排队候车。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "platform"
+      ],
+      "wordingEvidence": "historical staff PA wording documented in 2017 news; operator guide waiting 2",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": false,
+      "duration": 4.525,
+      "bytes": 36909
+    },
+    {
+      "id": "voice.safety.queue.yue",
+      "file": "voice/safety-queue-yue.mp3",
+      "group": "voice",
+      "label": "站台 · 黄线后排队",
+      "lang": "yue",
+      "text": "请唔好行出黄色安全线，请按地面标识排队候车。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "platform"
+      ],
+      "wordingEvidence": "historical staff PA wording documented in 2017 news; operator guide waiting 2",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": true,
+      "duration": 4.368,
+      "bytes": 35565
+    },
+    {
+      "id": "voice.safety.psd.zh",
+      "file": "voice/safety-psd-zh.mp3",
+      "group": "voice",
+      "label": "站台 · 请勿扶靠屏蔽门",
+      "lang": "zh",
+      "text": "手或身体请勿扶靠屏蔽门、安全门。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "platform"
+      ],
+      "wordingEvidence": "operator safety guide, waiting 3; slash rendered as spoken punctuation",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": false,
+      "duration": 4.923,
+      "bytes": 40173
+    },
+    {
+      "id": "voice.safety.psd.yue",
+      "file": "voice/safety-psd-yue.mp3",
+      "group": "voice",
+      "label": "站台 · 请勿扶靠屏蔽门",
+      "lang": "yue",
+      "text": "请唔好用手或者身体挨住屏蔽门、安全门。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "platform"
+      ],
+      "wordingEvidence": "operator safety guide, waiting 3; slash rendered as spoken punctuation",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": true,
+      "duration": 3.891,
+      "bytes": 31917
+    },
+    {
+      "id": "voice.safety.lights.zh",
+      "file": "voice/safety-lights-zh.mp3",
+      "group": "voice",
+      "label": "站台 · 灯闪铃响勿上落",
+      "lang": "zh",
+      "text": "灯闪、铃响时请勿上下列车。",
+      "model": "qwen3-tts-instruct-flash",
+      "voice": "Serena",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "platform"
+      ],
+      "wordingEvidence": "operator safety guide, boarding 1",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": false,
+      "duration": 2.436,
+      "bytes": 20205
+    },
+    {
+      "id": "voice.safety.lights.yue",
+      "file": "voice/safety-lights-yue.mp3",
+      "group": "voice",
+      "label": "站台 · 灯闪铃响勿上落",
+      "lang": "yue",
+      "text": "灯闪、铃响嘅时候，请唔好上落列车。",
+      "model": "qwen3-tts-flash",
+      "voice": "Kiki",
+      "language_type": "Chinese",
+      "purpose": "station-safety",
+      "zones": [
+        "platform"
+      ],
+      "wordingEvidence": "operator safety guide, boarding 1",
+      "source": "https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html",
+      "translation": true,
+      "duration": 3.244,
+      "bytes": 26733
+    },
+    {
+      "id": "sfx.doorOpen",
+      "file": "sfx/doorOpen.mp3",
+      "group": "sfx",
+      "label": "车门开启 · 1.25秒行程",
+      "duration": 1.25,
+      "bytes": 13485,
+      "loop": false,
+      "provenance": "original reconstruction; world mechanical travel 1.25s"
+    },
+    {
+      "id": "sfx.doorClose",
+      "file": "sfx/doorClose.mp3",
+      "group": "sfx",
+      "label": "车门关闭 · 1.25秒行程",
+      "duration": 1.25,
+      "bytes": 13485,
+      "loop": false,
+      "provenance": "original reconstruction; world mechanical travel 1.25s"
+    },
+    {
+      "id": "sfx.psdOpen",
+      "file": "sfx/psdOpen.mp3",
+      "group": "sfx",
+      "label": "屏蔽门开启 · 1.25秒行程",
+      "duration": 1.25,
+      "bytes": 13485,
+      "loop": false,
+      "provenance": "original reconstruction; world mechanical travel 1.25s"
+    },
+    {
+      "id": "sfx.psdClose",
+      "file": "sfx/psdClose.mp3",
+      "group": "sfx",
+      "label": "屏蔽门关闭 · 1.25秒行程",
+      "duration": 1.25,
+      "bytes": 13485,
+      "loop": false,
+      "provenance": "original reconstruction; world mechanical travel 1.25s"
+    },
+    {
+      "id": "sfx.gateOpen",
+      "file": "sfx/gateOpen.mp3",
+      "group": "sfx",
+      "label": "闸机扇门 · 0.6秒行程",
+      "duration": 0.6,
+      "bytes": 5421,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "sfx.escalator",
+      "file": "sfx/escalator.mp3",
+      "group": "sfx",
+      "label": "扶梯 · 驱动链与梯级循环",
+      "duration": 7.45,
+      "bytes": 60333,
+      "loop": true,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.tractionStart",
+      "file": "train/tractionStart.mp3",
+      "group": "train",
+      "label": "起步 · 牵引逆变器分级升调",
+      "duration": 5.2,
+      "bytes": 63405,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.curve",
+      "file": "train/curve.mp3",
+      "group": "train",
+      "label": "过弯 · 轮缘与钢轨摩擦",
+      "duration": 8.45,
+      "bytes": 102573,
+      "loop": true,
+      "provenance": "original acoustic synthesis"
+    },
+    {
+      "id": "train.airRelease",
+      "file": "train/airRelease.mp3",
+      "group": "train",
+      "label": "停稳 · 气制动阀放气",
+      "duration": 1.75,
+      "bytes": 18285,
+      "loop": false,
+      "provenance": "original acoustic synthesis"
+    }
+  ],
+  "routes": {
+    "gyq_up": {
+      "station": "gyq",
+      "dir": 1,
+      "destination": "广州东站",
+      "announcements": {
+        "next": [
+          "voice.destination.up.zh",
+          "voice.destination.up.yue",
+          "voice.destination.up.en",
+          "voice.next.gyq.zh",
+          "voice.next.gyq.yue",
+          "voice.next.gyq.en",
+          "voice.transfer.gyq.zh",
+          "voice.transfer.gyq.yue",
+          "voice.transfer.gyq.en"
+        ],
+        "arrive": [
+          "voice.arrive.gyq.zh",
+          "voice.arrive.gyq.yue",
+          "voice.arrive.gyq.en"
+        ],
+        "welcome": [
+          "voice.welcome.gyq.zh",
+          "voice.welcome.gyq.yue",
+          "voice.welcome.gyq.en"
+        ]
+      }
+    },
+    "gyq_down": {
+      "station": "gyq",
+      "dir": -1,
+      "destination": "西塱",
+      "announcements": {
+        "next": [
+          "voice.destination.down.zh",
+          "voice.destination.down.yue",
+          "voice.destination.down.en",
+          "voice.next.gyq.zh",
+          "voice.next.gyq.yue",
+          "voice.next.gyq.en",
+          "voice.transfer.gyq.zh",
+          "voice.transfer.gyq.yue",
+          "voice.transfer.gyq.en"
+        ],
+        "arrive": [
+          "voice.arrive.gyq.zh",
+          "voice.arrive.gyq.yue",
+          "voice.arrive.gyq.en"
+        ],
+        "welcome": [
+          "voice.welcome.gyq.zh",
+          "voice.welcome.gyq.yue",
+          "voice.welcome.gyq.en"
+        ]
+      }
+    },
+    "njs_up": {
+      "station": "njs",
+      "dir": 1,
+      "destination": "广州东站",
+      "announcements": {
+        "next": [
+          "voice.destination.up.zh",
+          "voice.destination.up.yue",
+          "voice.destination.up.en",
+          "voice.next.njs.zh",
+          "voice.next.njs.yue",
+          "voice.next.njs.en",
+          "voice.exit.left.zh",
+          "voice.exit.left.yue",
+          "voice.exit.left.en"
+        ],
+        "arrive": [
+          "voice.arrive.njs.zh",
+          "voice.arrive.njs.yue",
+          "voice.arrive.njs.en"
+        ],
+        "welcome": [
+          "voice.welcome.njs.zh",
+          "voice.welcome.njs.yue",
+          "voice.welcome.njs.en"
+        ]
+      }
+    },
+    "njs_down": {
+      "station": "njs",
+      "dir": -1,
+      "destination": "西塱",
+      "announcements": {
+        "next": [
+          "voice.destination.down.zh",
+          "voice.destination.down.yue",
+          "voice.destination.down.en",
+          "voice.next.njs.zh",
+          "voice.next.njs.yue",
+          "voice.next.njs.en",
+          "voice.exit.left.zh",
+          "voice.exit.left.yue",
+          "voice.exit.left.en"
+        ],
+        "arrive": [
+          "voice.arrive.njs.zh",
+          "voice.arrive.njs.yue",
+          "voice.arrive.njs.en"
+        ],
+        "welcome": [
+          "voice.welcome.njs.zh",
+          "voice.welcome.njs.yue",
+          "voice.welcome.njs.en"
+        ]
+      }
+    },
+    "lsly_up": {
+      "station": "lsly",
+      "dir": 1,
+      "destination": "广州东站",
+      "announcements": {
+        "next": [
+          "voice.destination.up.zh",
+          "voice.destination.up.yue",
+          "voice.destination.up.en",
+          "voice.next.lsly.zh",
+          "voice.next.lsly.yue",
+          "voice.next.lsly.en",
+          "voice.exit.left.zh",
+          "voice.exit.left.yue",
+          "voice.exit.left.en"
+        ],
+        "arrive": [
+          "voice.arrive.lsly.zh",
+          "voice.arrive.lsly.yue",
+          "voice.arrive.lsly.en"
+        ],
+        "welcome": [
+          "voice.welcome.lsly.zh",
+          "voice.welcome.lsly.yue",
+          "voice.welcome.lsly.en"
+        ]
+      }
+    },
+    "lsly_down": {
+      "station": "lsly",
+      "dir": -1,
+      "destination": "西塱",
+      "announcements": {
+        "next": [
+          "voice.destination.down.zh",
+          "voice.destination.down.yue",
+          "voice.destination.down.en",
+          "voice.next.lsly.zh",
+          "voice.next.lsly.yue",
+          "voice.next.lsly.en",
+          "voice.exit.left.zh",
+          "voice.exit.left.yue",
+          "voice.exit.left.en"
+        ],
+        "arrive": [
+          "voice.arrive.lsly.zh",
+          "voice.arrive.lsly.yue",
+          "voice.arrive.lsly.en"
+        ],
+        "welcome": [
+          "voice.welcome.lsly.zh",
+          "voice.welcome.lsly.yue",
+          "voice.welcome.lsly.en"
+        ]
+      }
+    },
+    "dsk_up": {
+      "station": "dsk",
+      "dir": 1,
+      "destination": "广州东站",
+      "announcements": {
+        "next": [
+          "voice.destination.up.zh",
+          "voice.destination.up.yue",
+          "voice.destination.up.en",
+          "voice.next.dsk.zh",
+          "voice.next.dsk.yue",
+          "voice.next.dsk.en",
+          "voice.exit.left.zh",
+          "voice.exit.left.yue",
+          "voice.exit.left.en"
+        ],
+        "arrive": [
+          "voice.arrive.dsk.zh",
+          "voice.arrive.dsk.yue",
+          "voice.arrive.dsk.en"
+        ],
+        "welcome": [
+          "voice.welcome.dsk.zh",
+          "voice.welcome.dsk.yue",
+          "voice.welcome.dsk.en"
+        ]
+      }
+    },
+    "dsk_down": {
+      "station": "dsk",
+      "dir": -1,
+      "destination": "西塱",
+      "announcements": {
+        "next": [
+          "voice.destination.down.zh",
+          "voice.destination.down.yue",
+          "voice.destination.down.en",
+          "voice.next.dsk.zh",
+          "voice.next.dsk.yue",
+          "voice.next.dsk.en",
+          "voice.exit.left.zh",
+          "voice.exit.left.yue",
+          "voice.exit.left.en"
+        ],
+        "arrive": [
+          "voice.arrive.dsk.zh",
+          "voice.arrive.dsk.yue",
+          "voice.arrive.dsk.en"
+        ],
+        "welcome": [
+          "voice.welcome.dsk.zh",
+          "voice.welcome.dsk.yue",
+          "voice.welcome.dsk.en"
+        ]
+      }
+    }
+  },
+  "announcements": {
+    "doorsClosing": [
+      "voice.doorsClosing.zh",
+      "voice.doorsClosing.yue",
+      "voice.doorsClosing.en"
+    ],
+    "gap": [
+      "voice.gap.zh",
+      "voice.gap.yue",
+      "voice.gap.en"
+    ]
+  },
+  "notes": [
+    "四站双方向使用预合成段落组合，普通话→粤语→英语。",
+    "到站、关门等扩展三语便于儿童体验；实际车厢部分安全提示仅普通话。",
+    "站台编号必须由场景传入，默认上行1、下行2是场景约定，非每座真实站台的核验结果。"
+  ],
+  "stationSafety": {
+    "escalator": {
+      "ids": [
+        "voice.safety.escalator.zh",
+        "voice.safety.escalator.yue"
+      ],
+      "zones": [
+        "concourse",
+        "platform"
+      ],
+      "evidence": "historical PA wording documented in 2017 news; still consistent with operator safety guide"
+    },
+    "care": {
+      "ids": [
+        "voice.safety.care.zh",
+        "voice.safety.care.yue"
+      ],
+      "zones": [
+        "concourse",
+        "platform"
+      ],
+      "evidence": "operator safety guide, escalator general guidance 1"
+    },
+    "walk": {
+      "ids": [
+        "voice.safety.walk.zh",
+        "voice.safety.walk.yue"
+      ],
+      "zones": [
+        "concourse"
+      ],
+      "evidence": "operator safety guide, station passage 4"
+    },
+    "queue": {
+      "ids": [
+        "voice.safety.queue.zh",
+        "voice.safety.queue.yue"
+      ],
+      "zones": [
+        "platform"
+      ],
+      "evidence": "historical staff PA wording documented in 2017 news; operator guide waiting 2"
+    },
+    "psd": {
+      "ids": [
+        "voice.safety.psd.zh",
+        "voice.safety.psd.yue"
+      ],
+      "zones": [
+        "platform"
+      ],
+      "evidence": "operator safety guide, waiting 3; slash rendered as spoken punctuation"
+    },
+    "lights": {
+      "ids": [
+        "voice.safety.lights.zh",
+        "voice.safety.lights.yue"
+      ],
+      "zones": [
+        "platform"
+      ],
+      "evidence": "operator safety guide, boarding 1"
+    }
+  },
+  "doorDuration": 1.25,
+  "gateDuration": 0.6
+}
