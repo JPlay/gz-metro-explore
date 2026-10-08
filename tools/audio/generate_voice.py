@@ -57,6 +57,16 @@ for key,zh,yue,label,zones,evidence in SAFETY:
         JOBS.append({'id':'voice.safety.'+key+'.'+lang,'file':'voice/safety-'+key+'-'+lang+'.mp3','group':'voice','label':label,'lang':lang,'text':text,'model':model,'voice':voice,'language_type':language,'purpose':'station-safety','zones':zones,'wordingEvidence':evidence,'source':'https://apppax.gzmtr.cn/DNSFile/wechat/guide/ccaq_index.html','translation':lang=='yue'})
 
 
+# 新网络（1、2 号线全部车站）的片段由 js/data/phrases.js 导出：node tools/audio/export_jobs.mjs → voice-jobs.json
+EXTRA=ROOT/'tools/audio/voice-jobs.json'
+if EXTRA.exists():
+    known={j['id'] for j in JOBS}
+    for j in json.loads(EXTRA.read_text()):
+        if j['id'] in known: continue
+        model,voice,language=LANGS[j['lang']]
+        JOBS.append({'id':j['id'],'file':j['file'],'group':'voice','label':j['id'][6:],'lang':j['lang'],'text':j['text'],'model':model,'voice':voice,'language_type':language})
+
+
 def ffmpeg(data,path):
     # NamedTemporaryFile lives outside the served workspace. Only audio bytes.
     with tempfile.NamedTemporaryFile(suffix='.wav') as tmp:
@@ -98,6 +108,7 @@ def manifest():
     for j in JOBS:
         a=dict(j)
         p=OUT/j['file']
+        if not p.exists():continue  # 只把真正存在的文件写进清单，缺的由游戏用 Web Speech 朗读
         if p.exists():
             r=subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',str(p)],capture_output=True,text=True)
             a['duration']=round(float(r.stdout),3);a['bytes']=p.stat().st_size

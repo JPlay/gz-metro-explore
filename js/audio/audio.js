@@ -8,7 +8,7 @@
  *   - 报站串行排队、epoch 取消、优先打断；每段开始/结束派发 gz-audio-caption 事件；
  *   - iOS：首次触摸内同步播放 1 帧静音并 resume（不能先 await 加载）；后台/pagehide 挂起，回前台重试；
  *     支持 navigator.audioSession 时请求 playback。
- * 等轴测游戏没有第一人称听者，所以去掉了 HRTF 空间定位，广播走非定位的 PA 链（旧版无喇叭点时的回退路径）。
+ * 广播走非定位的 PA 链（旧版无喇叭点时的回退路径），不做 HRTF 空间定位。
  */
 import { CONFIG } from '../core/config.js';
 import * as WebSpeech from './webspeech.js';
@@ -259,14 +259,15 @@ async function pump() {
       const item = queue.shift(); current = item;
       if (item.epoch !== epoch) { item.resolve({ cancelled: true }); continue; }
       for (let i = 0; i < item.ids.length && item.epoch === epoch; i++) {
-        const a = assets[item.ids[i]];
-        if (!a) { log.errors.push('未知片段 ' + item.ids[i]); continue; }
+        // 片段可以是清单 id，也可以是 {id, lang, text}（新车站：清单里没有 MP3 时直接走 Web Speech 回退）
+        const x = item.ids[i], a = typeof x === 'string' ? assets[x] : (assets[x.id] || x);
+        if (!a) { log.errors.push('未知片段 ' + x); continue; }
         if (!canPlay() || muted) {
           // 未解锁/静音/后台：照样按时长显示字幕，保证游戏节奏一致
           caption(a, { silent: true }); sleepToken = {}; await sleep(estimate(a) + (i ? 220 : 70), sleepToken); continue;
         }
-        let ok = true;
-        try { await ensureBuffer(a.id); } catch (e) { ok = false; }
+        let ok = !!(a.file && assets[a.id]);
+        if (ok) { try { await ensureBuffer(a.id); } catch (e) { ok = false; } }
         if (item.epoch !== epoch) break;
         if (!ok) { await fallbackClip(a, item.epoch); continue; }
         caption(a);
@@ -283,7 +284,7 @@ export function announceIds(ids, meta = {}) {
     if (meta.interrupt) cancelAnnouncements();
     queue.push({ ids, resolve, epoch, key: meta.key });
     // 预取本组语音，减少段间停顿
-    prefetch(ids);
+    prefetch(ids.map(x => typeof x === 'string' ? x : x.id).filter(id => assets[id]));
     pump();
   }));
 }

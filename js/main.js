@@ -1,275 +1,158 @@
 /*
- * 一号线 · 方块奇境 —— 启动与游戏状态机。
- * 状态：title（标题，背景是城市）→ hub（城市枢纽选站）→ ride（站间行车）→ station（车站谜题）→ ride → …
- * 四站顺序沿 1 号线上行：公园前 → 农讲所 → 烈士陵园 → 东山口；东山口之后回到城市并庆祝。
+ * 入口：Babylon 引擎、灯光阴影、画质自适应、主循环；把车站 / 玩家 / 输入 / 列车 / 语音串起来。
+ * window.__game 是给自动化测试用的调试接口（不影响正常游玩）。
  */
-import * as THREE from 'three';
 import { CONFIG } from './core/config.js';
-import { createRenderer } from './core/renderer.js';
-import { IsoCamera } from './core/camera.js';
-import { Input } from './core/input.js';
-import { updateTweens, tween, wait, Ease } from './core/tween.js';
-import { startLoop } from './core/loop.js';
-import { torusGeo } from './world/blocks.js';
-import { STATIONS, stationById, stationIndex } from './scenes/stations.js';
-import { HubScene } from './scenes/hub.js';
-import { RideScene } from './scenes/ride.js';
 import * as Audio from './audio/audio.js';
-import * as I18n from './ui/i18n.js';
-import { Hud } from './ui/hud.js';
-import { TitleScreen } from './ui/title.js';
-import { StationPicker } from './ui/station-picker.js';
-import { Hints } from './ui/hints.js';
+import * as Ann from './audio/announcements.js';
 import { initCaptions } from './ui/captions.js';
+import { Hud } from './ui/hud.js';
+import { Station, SPAWN, MAIN } from './world/station.js';
+import { Player } from './game/player.js';
+import { Input, pressable } from './game/input.js';
+import { Footprints } from './game/footprints.js';
+import { Metro } from './game/service.js';
+import { mats } from './core/mats.js';
+import { STATIONS, LINES, nextStation } from './data/lines.js';
+const B = window.BABYLON;
 
-window.__gameStarted = true;
-const $ = id => document.getElementById(id);
+class Events { constructor() { this.h = {}; } on(n, f) { (this.h[n] = this.h[n] || []).push(f); } emit(n, d) { (this.h[n] || []).forEach(f => f(d)); } }
 
-class Game {
-  constructor() {
-    this.canvas = $('scene');
-    this.R = createRenderer(this.canvas);
-    this.renderer = this.R.renderer;
-    this.renderer.localClippingEnabled = true;
-    this.scene3d = new THREE.Scene();
-    this.cam = new IsoCamera();
-    this.state = 'boot'; this.scene = null; this.shadowsDirty = true;
-    this.progress = this.loadProgress();
-    this.stationById = stationById;
-    this.setupLights();
-    this.hints = new Hints();
-    this.hud = new Hud({ onHome: () => this.goHub(), onHint: () => this.scene && this.scene.showHint && this.scene.showHint() });
-    this.title = new TitleScreen({ onStart: () => this.start() });
-    this.picker = new StationPicker(STATIONS, { onPick: id => this.pickStation(id) });
-    initCaptions();
-    I18n.apply();
-    I18n.onLang(() => this.updateRideBar());
-    $('btnSkip').addEventListener('click', () => this.scene && this.scene.skip && this.scene.skip());
-    $('btnAgain').addEventListener('click', () => { $('celebrate').hidden = true; this.picker.show(); });
-    this.input = new Input(this.canvas, {
-      grab: (x, y) => this.scene && this.scene.grab ? this.scene.grab(x, y) : null,
-      tap: (x, y) => this.scene && this.scene.tap && this.scene.tap(x, y),
-      pan: (dx, dy) => { if (this.state === 'station' || this.state === 'hub') this.cam.pan(dx, dy); },
-      pinch: f => { if (this.state === 'station' || this.state === 'hub') this.cam.zoomBy(f); }
-    });
-    // 点按涟漪
-    this.ripple = new THREE.Mesh(torusGeo(0.32, 0.04), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false }));
-    this.ripple.renderOrder = 3; this.scene3d.add(this.ripple);
-    window.addEventListener('resize', () => this.onResize());
-    window.addEventListener('orientationchange', () => setTimeout(() => this.onResize(), 250));
-    this.onResize();
-    // 场景实例：枢纽和行车常驻，车站进入时才搭建
-    this.hub = new HubScene(this, STATIONS); this.hub.build();
-    this.ride = new RideScene(this); this.ride.build();
-    this.R.onQuality(() => { this.shadowsDirty = true; });
-    startLoop((dt, t) => this.tick(dt, t));
-    this.showTitle();
-    $('boot').hidden = true;
-  }
-  setupLights() {
-    const hemi = new THREE.HemisphereLight(0xfff8ef, 0xd9c8e8, 1.55);
-    this.scene3d.add(hemi);
-    const sun = new THREE.DirectionalLight(0xfff1dc, 2.1);
-    sun.position.set(-4, 10, 7);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(1024, 1024);
-    sun.shadow.bias = -0.0008; sun.shadow.normalBias = 0.02;
-    sun.shadow.radius = 4;
-    this.scene3d.add(sun); this.scene3d.add(sun.target);
-    this.sun = sun; this.hemi = hemi;
-    this.scene3d.fog = new THREE.Fog(0xfdf1dc, 70, 150);
-  }
-  fitShadow(box) {
-    const c = box.getCenter(new THREE.Vector3()), r = box.getSize(new THREE.Vector3()).length() / 2 + 1;
-    this.sun.target.position.copy(c);
-    this.sun.position.copy(c).add(new THREE.Vector3(-4, 10, 7).normalize().multiplyScalar(r + 10));
-    const sc = this.sun.shadow.camera; sc.left = -r; sc.right = r; sc.top = r; sc.bottom = -r; sc.near = 0.5; sc.far = 2 * r + 20; sc.updateProjectionMatrix();
-    this.shadowsDirty = true;
-  }
-  setTheme(th) {
-    const app = $('app');
-    app.style.setProperty('--sky-top', th.top); app.style.setProperty('--sky-bot', th.bottom);
-    this.scene3d.fog.color.set(th.fog);
-  }
-  onResize() {
-    const w = this.canvas.clientWidth || innerWidth, h = this.canvas.clientHeight || innerHeight;
-    this.R.resize(); this.cam.resize(w, h);
-    if (this.scene) this.fitCamera(true);
-  }
-  fitCamera(immediate) {
-    const portrait = this.cam.height > this.cam.width;
-    const box = this.scene.fitBox();
-    // 枢纽/行车下方有按钮条，镜头稍微上移
-    const offset = this.state === 'hub' || this.state === 'title' ? -0.06 : (this.state === 'ride' ? -0.04 : -0.02);
-    this.cam.fit(box, portrait ? 1.08 : 1.12, immediate, offset);
-  }
-  setScene(sc, params) {
-    if (this.scene && this.scene !== sc) { this.scene.exit(); this.scene.root.removeFromParent(); if (this.scene.kind === 'station') { this.scene.exitScene(); this.scene.dispose(); } }
-    this.scene = sc;
-    this.scene3d.add(sc.root);
-    this.setTheme(sc.theme);
-    sc.enter(params);
-    this.fitCamera(true);
-    this.fitShadow(sc.fitBox());
-    this.hints.hide();
-  }
-  async fade(on) { $('fade').classList.toggle('on', on); await wait(0.6); }
+export async function start() {
+  const canvas = document.getElementById('c');
+  const engine = new B.Engine(canvas, true, { stencil: false, powerPreference: 'high-performance', audioEngine: false }, false);
+  const scene = new B.Scene(engine);
+  scene.clearColor = B.Color4.FromHexString('#9FD8F5FF'); scene.ambientColor = new B.Color3(0.35, 0.35, 0.38);
+  scene.collisionsEnabled = true; scene.skipPointerMovePicking = true; scene.autoClear = true;
+  const M = mats(scene);
+  const cam = new B.FreeCamera('cam', new B.Vector3(0, 2, -52), scene); cam.minZ = 0.08; cam.maxZ = 420; cam.fov = 0.95; cam.inputs.clear();
+  const hemi = new B.HemisphericLight('hemi', new B.Vector3(0.2, 1, 0.1), scene); hemi.intensity = 0.72; hemi.groundColor = new B.Color3(0.78, 0.78, 0.8);
+  const sun = new B.DirectionalLight('sun', new B.Vector3(-0.35, -1, 0.45), scene); sun.intensity = 0.85; sun.shadowFrustumSize = 36; sun.shadowMinZ = 1; sun.shadowMaxZ = 80; sun.autoUpdateExtends = false;
+  const sg = new B.ShadowGenerator(1024, sun); sg.usePercentageCloserFiltering = true; sg.filteringQuality = B.ShadowGenerator.QUALITY_LOW; sg.bias = 0.004; sg.darkness = 0.35;
 
-  /* ---------- 状态切换 ---------- */
-  showTitle() {
-    this.state = 'title';
-    this.setScene(this.hub);
-    this.cam.goalZoom = 0.92;
-    this.title.show(); this.hud.hide(); this.picker.hide();
-  }
-  start() {
-    Audio.unlock(); // 必须在点击事件里同步调用（iOS）
-    this.title.hide();
-    this.state = 'hub';
-    this.hud.show({ home: false, hint: false });
-    this.picker.refresh(this.progress.done); this.picker.show();
-    this.fitCamera(false);
-  }
-  async goHub() {
-    if (this.state === 'hub') return;
-    Audio.cancelAnnouncements();
-    this.input.cancelAll();
-    await this.fade(true);
-    this.state = 'hub';
-    this.setScene(this.hub);
-    this.hideRide();
-    this.hud.show({ home: false, hint: false });
-    this.picker.refresh(this.progress.done); this.picker.show();
-    await this.fade(false);
-  }
-  async pickStation(id) {
-    if (this.state !== 'hub' || this.busy) return;
-    this.busy = true;
-    this.picker.hide();
-    await this.hub.playPick(id);
-    await this.startRide(id, true);
-    this.busy = false;
-  }
-  async startRide(to, withDestination) {
-    await this.fade(true);
-    this.state = 'ride';
-    this.setScene(this.ride, { to, withDestination, onArrive: () => to ? this.enterStation(to) : this.finale() });
-    this.hud.show({ home: true, hint: false });
-    this.showRide(to);
-    await this.fade(false);
-  }
-  async enterStation(id) {
-    await this.fade(true);
-    this.hideRide();
-    const st = stationById(id);
-    const sc = new st.Scene(this, st); sc.build();
-    this.state = 'station';
-    this.setScene(sc);
-    this.hud.show({ home: true, hint: true });
-    await this.fade(false);
-  }
-  onStationComplete(id) {
-    this.progress.done[id] = true; this.saveProgress();
-    const i = stationIndex(id);
-    if (i < STATIONS.length - 1) this.startRide(STATIONS[i + 1].id, false);
-    else this.startRide(null, false);
-  }
-  async finale() {
-    await this.fade(true);
-    this.hideRide();
-    this.state = 'hub';
-    this.setScene(this.hub);
-    this.hud.show({ home: false, hint: false });
-    this.picker.refresh(this.progress.done);
-    $('celeStars').innerHTML = STATIONS.map((s, i) => `<span style="animation-delay:${0.2 + i * 0.18}s">★</span>`).join('');
-    $('celebrate').hidden = false;
-    await this.fade(false);
-    this.hub.transformAll();
-    Audio.blip('goal');
-  }
-  showRide(to) {
-    $('rideBar').hidden = false; $('btnSkip').hidden = true;
-    this.rideTo = to; this.updateRideBar();
-    clearTimeout(this.skipTimer);
-    this.skipTimer = setTimeout(() => { if (this.state === 'ride') $('btnSkip').hidden = false; }, 2500);
-  }
-  hideRide() { $('rideBar').hidden = true; clearTimeout(this.skipTimer); }
-  updateRideBar() {
-    const el = $('rideLine'); if (!el) return;
-    const ti = this.rideTo ? stationIndex(this.rideTo) : STATIONS.length;
-    el.innerHTML = STATIONS.map((s, i) => `<div class="stop ${i < ti ? 'passed' : ''} ${i === ti ? 'next' : ''}"><i></i><span>${I18n.stationName(s)}</span></div>`).join('');
-  }
-  tapRipple(pos, exact) {
-    const r = this.ripple; r.position.copy(pos); r.position.y += 0.03;
-    r.material.color.set(exact ? 0xffffff : 0xffc9b8);
-    tween(0.6, k => { r.scale.setScalar(0.6 + k * 0.9); r.material.opacity = 0.9 * (1 - k); }, { ease: Ease.outCubic });
-  }
+  const events = new Events(), hud = new Hud(), input = new Input({
+    surface: document.getElementById('touch'), stick: document.getElementById('stick'), hint: document.getElementById('stickHint'),
+    onView: () => toggleView(), onFoot: () => toggleFoot(), onMute: () => toggleMute(), onJump: () => {}
+  });
+  const player = new Player(scene, M, cam), feet = new Footprints(scene);
+  player.meshes().forEach(m => sg.addShadowCaster(m));
+  initCaptions();
+  Audio.loadManifest().catch(e => console.warn('manifest', e));
 
-  /* ---------- 存档 ---------- */
-  loadProgress() { try { const s = JSON.parse(localStorage.getItem(CONFIG.storageKey) || '{}'); return { done: s.done || {} }; } catch (_) { return { done: {} }; } }
-  saveProgress() { try { const s = JSON.parse(localStorage.getItem(CONFIG.storageKey) || '{}'); s.done = this.progress.done; localStorage.setItem(CONFIG.storageKey, JSON.stringify(s)); } catch (_) {} }
+  const G = { code: null, station: null, zone: { kind: 'street' }, welcomed: false, tier: CONFIG.fixedQuality ?? 1, fps: 60, auto: null, inTunnel: false, lastStep: 0 };
+  const metro = new Metro(scene, {
+    player, Audio, events, buildStation: code => buildStation(code), onTunnel: v => { G.inTunnel = v; scene.fogMode = v ? B.Scene.FOGMODE_LINEAR : B.Scene.FOGMODE_NONE; },
+    get zone() { return G.zone; }
+  });
+  metro.trains.forEach(t => t.shadowMeshes.forEach(m => sg.addShadowCaster(m)));
+  scene.fogColor = new B.Color3(0.08, 0.09, 0.11); scene.fogStart = 25; scene.fogEnd = 85;
 
-  /* ---------- 主循环 ---------- */
-  tick(dt, t) {
-    updateTweens(dt);
-    if (this.scene) this.scene.update(dt, t);
-    if (this.state === 'title') { this.cam.goal.x += Math.sin(t * 0.2) * dt * 0.15; }
-    this.cam.update(dt);
-    this.hints.update(dt, this.cam);
-    if (this.shadowsDirty) { this.renderer.shadowMap.needsUpdate = true; this.shadowsDirty = false; }
-    this.renderer.render(this.scene3d, this.cam.camera);
-    this.R.sample(dt);
+  function buildStation(code) {
+    if (G.station) G.station.dispose();
+    const st = new Station(scene, code, events);
+    st.kit.meshes.forEach(m => { m.receiveShadows = true; });
+    G.station = st; G.code = code; G.welcomed = false; feet.clear();
+    metro.attach(st);
+    return st;
   }
-}
+  // —— 开始位置：默认公园前站口外的街上
+  if (CONFIG.start && STATIONS[CONFIG.start]) {
+    const st = buildStation(CONFIG.start), P = st.platformFor(CONFIG.startLine) || st.platforms[0];
+    player.spawn(20, P.y + 0.05, P.zc, Math.PI / 2);
+  } else { buildStation('gyq'); player.spawn(SPAWN.x, SPAWN.y + 0.05, SPAWN.z, SPAWN.yaw); }
 
-let game;
-try {
-  game = new Game();
-} catch (e) {
-  console.error(e);
-  $('fatalText').textContent = '启动失败：' + e.message; $('fatal').hidden = false; $('boot').hidden = true;
-}
+  // —— 事件 → 提示
+  const MVTXT = { penrose: '✨ 楼梯连成一圈了！', bridge: '✨ 桥自己拼起来了！', arches: '✨ 拱门对齐啦！' };
+  events.on('gate', () => hud.toast('闸机开啦 ✔'));
+  events.on('security', () => hud.toast('安检通过 ✔ 嘀！'));
+  events.on('mv', d => { hud.toast(MVTXT[d.kind] || '✨', 2400); Audio.blip && Audio.blip('goal'); G.mv = (G.mv || 0) + 1; });
+  events.on('ride', d => { if (d.phase === 'arrive') hud.toast(`到站：${STATIONS[d.to].zh}`, 2200); });
 
-// 测试/调试接口（Playwright 用；不影响正常游玩）
-window.__game = {
-  get game() { return game; },
-  get state() { return game.state; },
-  get stationId() { return game.scene && game.scene.station ? game.scene.station.id : null; },
-  three: () => window.__threeSource,
-  quality: () => ({ ...game.R.stats }),
-  audio: () => Audio.getState(),
-  stations: STATIONS.map(s => s.id),
-  async goto(state, id) {
-    if (state === 'station') { Audio.cancelAnnouncements(); game.hideRide(); const st = stationById(id); const sc = new st.Scene(game, st); sc.build(); game.state = 'station'; game.setScene(sc); game.hud.show({ home: true, hint: true }); game.picker.hide(); $('title').hidden = true; }
-    if (state === 'ride') { Audio.cancelAnnouncements(); game.picker.hide(); $('title').hidden = true; await game.startRide(id, true); }
-    if (state === 'hub') { await game.goHub(); }
-  },
-  /** 当前车站：路径图信息、可达性、节点可见性 */
-  graphInfo() {
-    const sc = game.scene; if (!sc || !sc.graph) return null;
-    const g = sc.graph, from = sc.passenger ? sc.passenger.nodeId : null;
-    const links = []; for (const [id, ls] of g.links) for (const l of ls) links.push({ from: id, to: l.to, illusion: l.illusion });
-    return { nodes: [...g.nodes.values()].map(n => ({ id: n.id, active: n.active, w: [n.world.x, n.world.y, n.world.z].map(v => +v.toFixed(2)) })), links, passenger: from, goal: sc.goalId, goalReachable: from ? !!g.astar(from, sc.goalId) : null };
-  },
-  /** 每个节点顶面是否被别的方块挡住（沿视线射线检测） */
-  occlusion() {
-    const sc = game.scene; if (!sc || !sc.graph) return null;
-    const rc = new THREE.Raycaster(), dir = game.cam.camera.getWorldDirection(new THREE.Vector3()).negate();
-    const solids = []; sc.root.traverse(o => { if (o.isMesh && o.material && o.material.visible !== false && !o.material.transparent && !(o.parent && o.parent.userData.figure) && !o.userData.nodeId) solids.push(o); });
-    const out = [];
-    for (const n of sc.graph.nodes.values()) {
-      if (!n.active) continue;
-      const p = n.world.clone().add(new THREE.Vector3(0, 0.12, 0));
-      rc.set(p, dir); rc.far = 200;
-      const hit = rc.intersectObjects(solids, false).find(h => !(h.object.parent && (h.object.parent.userData.figure || h.object.parent.parent && h.object.parent.parent.userData.figure)) && !isFigure(h.object));
-      if (hit) out.push({ id: n.id, by: hit.object.name || hit.object.geometry.type, at: hit.point.toArray().map(v => +v.toFixed(2)) });
+  // —— 按钮
+  const toggleView = () => { const v = player.toggleView(); hud.setBtn('bView', v === 'first', v === 'first' ? '👀' : '👁️', v === 'first' ? '第一人称' : '第三人称'); return v; };
+  const toggleFoot = () => { const on = feet.toggle(); hud.setBtn('bFoot', on); hud.toast(on ? '💡 发光脚印：开' : '脚印：关', 1200); return on; };
+  const toggleMute = () => { Audio.setMuted(!Audio.isMuted()); hud.setBtn('bMute', Audio.isMuted(), Audio.isMuted() ? '🔇' : '🔊'); return Audio.isMuted(); };
+  pressable(document.getElementById('bView'), toggleView);
+  pressable(document.getElementById('bFoot'), toggleFoot);
+  pressable(document.getElementById('bMute'), toggleMute);
+  pressable(document.getElementById('bJump'), () => { input.jumpQueued = true; });
+  hud.setBtn('bView', false, '👁️', '第三人称');
+  // iOS：第一次触摸时解锁音频（必须在手势事件里同步调用）
+  let unlocked = false;
+  const unlock = () => { if (unlocked) return; unlocked = true; Audio.unlock().then(ok => { if (!ok) unlocked = false; }); };
+  ['pointerdown', 'touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlock, { capture: true, passive: true }));
+
+  // —— 画质
+  const applyQuality = () => {
+    const q = CONFIG.qualityLevels[G.tier], dpr = window.devicePixelRatio || 1;
+    engine.setHardwareScalingLevel(1 / Math.min(dpr, q.scale)); sun.shadowEnabled = q.shadows;
+  };
+  applyQuality();
+  let fpsAcc = 0, fpsN = 0, fpsT = 0, lowCount = 0;
+  window.addEventListener('resize', () => engine.resize());
+
+  // —— 主循环
+  let stepAcc = 0;
+  scene.onBeforeRenderObservable.add(() => {
+    const dt = Math.min(0.05, engine.getDeltaTime() / 1000);
+    // 自动驾驶（测试用）
+    if (G.auto) {
+      const a = G.auto, t = a.pts[a.i], p = player.position, dx = t[0] - p.x, dz = t[1] - p.z, d = Math.hypot(dx, dz);
+      a.time += dt;
+      if (d < 0.35) { a.i++; a.time = 0; if (a.i >= a.pts.length) { input.virtual = null; G.auto = null; a.resolve({ ok: true }); } }
+      else if (a.time > 12) { input.virtual = null; G.auto = null; a.resolve({ ok: false, stuckAt: [p.x, p.y, p.z], target: t }); }
+      else { player.yaw = Math.atan2(dx, dz); input.virtual = { x: 0, y: d < 1 ? 0.5 : 1, run: !!a.run && d > 2 }; }
     }
-    return out;
-  },
-  screenOf(id) { const n = game.scene.graph.get(id); return game.cam.toScreen(n.world); },
-  mechScreen(i) { const m = game.scene.mechs[i]; const w = m.centerWorld || (m.center) || m.group.getWorldPosition(new THREE.Vector3()); return game.cam.toScreen(w); },
-  mechValues() { return game.scene.mechs ? game.scene.mechs.map(m => +m.value.toFixed(2)) : []; },
-  solve() { return game.scene.autoSolve(); },
-  skipRide() { game.scene.skip && game.scene.skip(); }
-};
-function isFigure(o) { let p = o; while (p) { if (p.userData && p.userData.figure) return true; p = p.parent; } return false; }
+    const inp = input.read();
+    const conv = G.station.conveyor(player.position);
+    player.update(dt, inp, conv ? { x: conv * dt, z: 0 } : null);
+    metro.update(dt);
+    player.updateCamera(dt, scene);
+    G.station.update(dt, player, cam, Audio);
+    // 区域 / 环境声 / 欢迎广播
+    const p = player.position, aboard = metro.trains.some(t => t.root.isEnabled() && t.contains(p));
+    G.zone = G.inTunnel ? { kind: 'tunnel' } : G.station.zoneOf(p); G.aboard = aboard || G.inTunnel;
+    Audio.setZone(G.aboard ? 'train' : ({ street: 'street', platform: 'platform' }[G.zone.kind] || 'concourse'));
+    if (G.zone.kind === 'platform' && !G.welcomed && !G.aboard) { G.welcomed = true; if (!Audio.isAnnouncing()) Ann.welcome(G.code); }
+    const rl = metro.ride && metro.ride.train && G.aboard ? metro.ride : null;
+    const line = rl ? rl.line : (G.zone.kind === 'platform' ? G.zone.P.line : STATIONS[G.code].lines[0]);
+    hud.where(G.code, line, rl && rl.phase === 'cruise' ? rl.next : null);
+    // 脚步声 / 脚印
+    if (player.grounded && player.speed > 0.5 && !G.aboard) { stepAcc += player.speed * dt; if (stepAcc > 0.75) { stepAcc = 0; Audio.footstep(); } }
+    feet.update(dt, p, player.facing, player.grounded, player.moving && !G.aboard);
+    if (player.landed) { player.landed = false; Audio.sfx('footstep', { volume: 0.6, rate: 0.8 }); }
+    // 掉出世界 → 回到站台 / 站口
+    if (!G.inTunnel && p.y < -40) {
+      const P = G.station.platforms[0]; player.spawn(20, P.y + 0.05, P.zc, Math.PI / 2); hud.toast('回到站台啦');
+    }
+    // 阴影跟随玩家
+    sun.position.set(p.x + 14, p.y + 40, p.z - 18);
+    // 帧率 → 自动降档
+    fpsAcc += engine.getFps(); fpsN++; fpsT += dt;
+    if (fpsT > 3) {
+      G.fps = fpsAcc / fpsN; fpsAcc = fpsN = fpsT = 0;
+      if (CONFIG.fixedQuality === null && G.fps < 45 && G.tier < 3) { if (++lowCount >= 2) { G.tier++; lowCount = 0; applyQuality(); } } else lowCount = 0;
+    }
+  });
+  engine.runRenderLoop(() => scene.render());
+  const loading = document.getElementById('loading'); loading.style.transition = 'opacity .4s'; loading.style.opacity = '0'; setTimeout(() => loading.remove(), 450);
+
+  // —— 测试接口
+  let inst = null; try { inst = new B.SceneInstrumentation(scene); inst.captureFrameTime = true; } catch (_) {}
+  window.__game = {
+    state: () => ({
+      code: G.code, zone: G.zone.kind, pos: [player.position.x, player.position.y, player.position.z].map(v => +v.toFixed(2)), yaw: +player.yaw.toFixed(3), pitch: +player.pitch.toFixed(3),
+      view: player.view, grounded: player.grounded, foot: feet.on, footCount: feet.count(), aboard: !!G.aboard, inTunnel: G.inTunnel, fps: Math.round(engine.getFps()), avgFps: Math.round(G.fps), tier: G.tier,
+      metro: metro.info(), mv: G.mv || 0, camPos: [cam.position.x, cam.position.y, cam.position.z].map(v => +v.toFixed(2)),
+      babylon: { version: B.Engine.Version, source: window.__babylonSource, attempts: window.__babylonAttempts },
+      drawCalls: (engine._drawCalls && engine._drawCalls.current) ?? null, activeMeshes: scene.getActiveMeshes().length, gates: G.station.gates.map(g => +g.f.toFixed(2)),
+      security: G.station.security.flash > 0, atlas: G.station.kit.atlas ? { y: G.station.kit.atlas.y + G.station.kit.atlas.row, overflow: G.station.kit.atlas.overflow } : null, audio: Audio.getState()
+    }),
+    teleport: (x, y, z, yaw) => player.spawn(x, y, z, yaw ?? player.yaw),
+    setMove: (x, y, run) => { input.virtual = (x || y) ? { x, y, run } : null; },
+    look: (dx, dy) => { input.look.x += dx; input.look.y += dy; },
+    jump: () => { input.jumpQueued = true; }, toggleView, toggleFoot, toggleMute,
+    autopilot: (pts, run) => new Promise(resolve => { G.auto = { pts, i: 0, time: 0, resolve, run }; }),
+    call: (line, step) => metro.call(line, step), metro, player, scene, engine, events
+  };
+}

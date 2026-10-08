@@ -1,34 +1,19 @@
-// 顶部按钮：回城市、提示、声音、语言；中间是当前车站徽章。
-import { t, cycleLang, getLang, LANG_ICON, onLang, stationName, stationSub } from './i18n.js';
-import * as Audio from '../audio/audio.js';
-
+// HUD：左上角站名牌（线路色）、下一站提示、居中小提示（toast）。
+import { LINES, STATIONS } from '../data/lines.js';
+const $ = id => document.getElementById(id);
 export class Hud {
-  constructor({ onHome, onHint }) {
-    this.el = document.getElementById('hud');
-    this.badge = document.getElementById('stationBadge');
-    this.station = null;
-    document.getElementById('btnHome').addEventListener('click', () => onHome && onHome());
-    document.getElementById('btnHint').addEventListener('click', () => onHint && onHint());
-    const snd = document.getElementById('btnSound'), sIco = document.getElementById('soundIco');
-    snd.addEventListener('click', () => { Audio.setMuted(!Audio.isMuted()); sIco.textContent = Audio.isMuted() ? '×' : '♪'; snd.classList.toggle('on', Audio.isMuted()); });
-    const langBtn = document.getElementById('btnLang');
-    langBtn.addEventListener('click', () => cycleLang());
-    onLang(() => this.refresh());
-    this.refresh();
+  constructor() { this.toastT = null; this.key = ''; }
+  where(code, line, nextCode) {
+    const s = STATIONS[code], L = LINES[line] || LINES[s.lines[0]], key = code + line + (nextCode || '');
+    if (key === this.key) return; this.key = key;
+    const ln = $('whereLine'); ln.textContent = L.zh; ln.style.background = L.color; ln.style.color = L.ink;
+    $('whereName').textContent = s.zh; $('whereEn').textContent = s.en;
+    const n = $('next');
+    if (nextCode) { n.hidden = false; n.textContent = `下一站：${STATIONS[nextCode].zh}  Next: ${STATIONS[nextCode].en}`; } else n.hidden = true;
   }
-  show(opts = {}) {
-    this.el.hidden = false;
-    document.getElementById('btnHome').hidden = !opts.home;
-    document.getElementById('btnHint').hidden = !opts.hint;
+  toast(text, ms = 1800) {
+    const t = $('toast'); t.textContent = text; t.hidden = false; t.style.animation = 'none'; void t.offsetWidth; t.style.animation = '';
+    clearTimeout(this.toastT); this.toastT = setTimeout(() => { t.hidden = true; }, ms);
   }
-  hide() { this.el.hidden = true; }
-  setStation(st) { this.station = st; this.badge.hidden = !st; this.refresh(); }
-  refresh() {
-    document.getElementById('langIco').textContent = LANG_ICON[getLang()];
-    if (this.station) {
-      document.getElementById('stationName').textContent = stationName(this.station);
-      document.getElementById('stationSub').textContent = stationSub(this.station);
-      this.badge.querySelector('.dot').style.background = this.station.cssColor;
-    }
-  }
+  setBtn(id, on, ico, lbl) { const b = $(id); b.classList.toggle('on', !!on); if (ico) b.querySelector('.ico').textContent = ico; if (lbl) b.querySelector('.lbl').textContent = lbl; }
 }
