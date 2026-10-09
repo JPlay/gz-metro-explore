@@ -20,8 +20,8 @@
   window.__babylonVersion = VERSION;
   window.__babylonAttempts = [];
 
-  function setMsg(t) { if (msg) msg.textContent = t; }
-  function setBar(f) { if (bar) bar.style.width = Math.max(3, Math.min(100, f * 100)).toFixed(1) + '%'; }
+  function setMsg(t) { if (window.__loadUI) window.__loadUI.set(null, t); else if (msg) msg.textContent = t; }
+  function setBar(f) { if (window.__loadUI) window.__loadUI.set(f); else if (bar) bar.style.width = Math.max(3, Math.min(100, f * 100)).toFixed(1) + '%'; }
   function fail(t) { var l = document.getElementById('loading'); if (l) l.className = 'err'; setMsg(t); }
 
   function viaScriptTag(src) {
@@ -49,7 +49,7 @@
             clearTimeout(stall);
             if (x.done) return res(new Blob(chunks, { type: 'text/javascript' }));
             chunks.push(x.value); got += x.value.length;
-            setBar(0.05 + 0.85 * Math.min(1, got / (total > got ? total : got * 1.15)));
+            setBar(0.05 + 0.40 * Math.min(1, got / (total > got ? total : got * 1.15)));
             stall = setTimeout(function () { ctrl.abort(); rej(new Error('stalled')); }, STALL_TIMEOUT);
             pump();
           }, function (e) { clearTimeout(stall); rej(e); });
@@ -63,19 +63,20 @@
   }
 
   function next(i) {
-    if (i >= list.length) { fail('3D 引擎加载失败，请检查网络后刷新页面。'); return; }
+    if (i >= list.length) { fail('列车暂时开不过来，请检查网络后刷新页面。'); return; }
     var src = list[i], t0 = performance.now();
-    setMsg('正在加载 3D 引擎（' + (i + 1) + '/' + list.length + '：' + src.id + '）…');
+    setMsg(i === 0 ? '列车正在进站…' : '换一条轨道，列车马上就到…');
     load(src, i).then(function () {
       window.__babylonSource = src.id;
       window.__babylonAttempts.push({ id: src.id, ok: true, ms: Math.round(performance.now() - t0) });
-      setBar(0.92); setMsg('正在搭建车站…');
+      (window.__loadT = window.__loadT || {}).babylon = Math.round(performance.now());
+      setBar(0.48); setMsg('正在打开闸机…');
       return import('./main.js').then(function (m) { return m.start(); });
     }, function (e) {
       window.__babylonAttempts.push({ id: src.id, ok: false, error: String(e && e.message || e), ms: Math.round(performance.now() - t0) });
       next(i + 1);
     }).catch(function (e) {
-      console.error(e); fail('启动失败：' + (e && e.message || e));
+      console.error(e); fail('哎呀，车站没开好，请刷新页面再试一次。');
     });
   }
   next(0);

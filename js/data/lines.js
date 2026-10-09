@@ -13,6 +13,7 @@
  *   [5] 其他线路颜色（只用于换乘标识）：英文维基 Module:Adjacent stations/Guangzhou Metro
  *   广州地铁官网 gzmtr.com 在核对时从本机网络访问超时（504），未能直接引用，详见 README。
  *
+ * 英文站名：按广州地铁导向的惯例一律用汉语拼音（如 农讲所 Nongjiangsuo、广州东站 Guangzhou Dongzhan），不用意译。
  * 结论：1 号线是黄色（不是黄绿色），2 号线是蓝色（#00629b）。
  * 换乘只列“已开通”的线路；未开通的（如烈士陵园 12 号线、纪念堂 13/24 号线、市二宫 28 号线）不显示。
  * 方向约定：数组顺序 = 站号递增方向。1 号线递增 = 往广州东站（dir 'up'），递减 = 往西塱（'down'）；
@@ -22,12 +23,12 @@
 export const LINES = {
   1: {
     id: 1, zh: '1号线', en: 'Line 1', color: '#F3D03E', ink: '#3A3000', soft: '#FFF3C4',
-    dirs: { up: { zh: '广州东站', en: 'Guangzhou East Railway Station', step: 1 }, down: { zh: '西塱', en: 'Xilang', step: -1 } },
+    dirs: { up: { zh: '广州东站', en: 'Guangzhou Dongzhan', step: 1 }, down: { zh: '西塱', en: 'Xilang', step: -1 } },
     stations: ['xl', 'kk', 'hdw', 'fc', 'hs', 'csl', 'cjc', 'xmk', 'gyq', 'njs', 'lsly', 'dsk', 'yj', 'tyxl', 'tyzx', 'gzdz']
   },
   2: {
     id: 2, zh: '2号线', en: 'Line 2', color: '#00629B', ink: '#FFFFFF', soft: '#CFE6F5',
-    dirs: { l2n: { zh: '嘉禾望岗', en: 'Jiahewanggang', step: 1 }, l2s: { zh: '广州南站', en: 'Guangzhou South Railway Station', step: -1 } },
+    dirs: { l2n: { zh: '嘉禾望岗', en: 'Jiahewanggang', step: 1 }, l2s: { zh: '广州南站', en: 'Guangzhou Nanzhan', step: -1 } },
     stations: ['gznz', 'sb', 'hj', 'np', 'lx', 'nz', 'dxn', 'jtl', 'cg', 'jnx', 'seg', 'hzgc', 'gyq', 'jnt', 'yxgy', 'gzhcz', 'syl', 'fxgy', 'bygy', 'bywhgc', 'xg', 'jx', 'hb', 'jhwg']
   }
 };
@@ -59,36 +60,36 @@ export const STATIONS = {
   fc: { zh: '芳村', en: 'Fangcun', x: [11, 22] },
   hs: { zh: '黄沙', en: 'Huangsha', x: [6] },
   csl: { zh: '长寿路', en: 'Changshou Lu', x: [] },
-  cjc: { zh: '陈家祠', en: 'Chen Clan Academy', x: [8] },
+  cjc: { zh: '陈家祠', en: 'Chenjiaci', x: [8] },
   xmk: { zh: '西门口', en: 'Ximenkou', x: [] },
   gyq: { zh: '公园前', en: 'Gongyuanqian', x: [], signature: 'park' },
-  njs: { zh: '农讲所', en: 'Peasant Movement Institute', x: [], signature: 'redwall' },
-  lsly: { zh: '烈士陵园', en: "Martyrs' Park", x: [], signature: 'memorial' },
+  njs: { zh: '农讲所', en: 'Nongjiangsuo', x: [], signature: 'redwall' },
+  lsly: { zh: '烈士陵园', en: 'Lieshi Lingyuan', x: [], signature: 'memorial' },
   dsk: { zh: '东山口', en: 'Dongshankou', x: [6], signature: 'villa' },
   yj: { zh: '杨箕', en: 'Yangji', x: [5] },
   tyxl: { zh: '体育西路', en: 'Tiyu Xilu', x: [3] },
-  tyzx: { zh: '体育中心', en: 'Tianhe Sports Center', x: [] },
-  gzdz: { zh: '广州东站', en: 'Guangzhou East Railway Station', x: [3, 11] },
+  tyzx: { zh: '体育中心', en: 'Tiyu Zhongxin', x: [] },
+  gzdz: { zh: '广州东站', en: 'Guangzhou Dongzhan', x: [3, 11] },
   // —— 2 号线（2-01 … 2-24）
-  gznz: { zh: '广州南站', en: 'Guangzhou South Railway Station', x: [7, 22, 'F2'] },
+  gznz: { zh: '广州南站', en: 'Guangzhou Nanzhan', x: [7, 22, 'F2'] },
   sb: { zh: '石壁', en: 'Shibi', x: [7] },
   hj: { zh: '会江', en: 'Huijiang', x: [] },
   np: { zh: '南浦', en: 'Nanpu', x: [] },
   lx: { zh: '洛溪', en: 'Luoxi', x: [] },
   nz: { zh: '南洲', en: 'Nanzhou', x: ['GF'] },
-  dxn: { zh: '东晓南', en: 'Dongxiao South', x: [10] },
-  jtl: { zh: '江泰路', en: 'Jiangtai Road', x: [11] },
+  dxn: { zh: '东晓南', en: 'Dongxiaonan', x: [10] },
+  jtl: { zh: '江泰路', en: 'Jiangtai Lu', x: [11] },
   cg: { zh: '昌岗', en: 'Changgang', x: [8] },
   jnx: { zh: '江南西', en: 'Jiangnanxi', x: [] },
-  seg: { zh: '市二宫', en: "The 2nd Workers' Cultural Palace", x: [] },
-  hzgc: { zh: '海珠广场', en: 'Haizhu Square', x: [6] },
-  jnt: { zh: '纪念堂', en: 'Sun Yat-sen Memorial Hall', x: [] },
-  yxgy: { zh: '越秀公园', en: 'Yuexiu Park', x: [], signature: 'rams' },
-  gzhcz: { zh: '广州火车站', en: 'Guangzhou Railway Station', x: [5], signature: 'railway' },
+  seg: { zh: '市二宫', en: "Shi'ergong", x: [] },
+  hzgc: { zh: '海珠广场', en: 'Haizhu Guangchang', x: [6] },
+  jnt: { zh: '纪念堂', en: 'Jiniantang', x: [] },
+  yxgy: { zh: '越秀公园', en: 'Yuexiu Gongyuan', x: [], signature: 'rams' },
+  gzhcz: { zh: '广州火车站', en: 'Guangzhou Huochezhan', x: [5], signature: 'railway' },
   syl: { zh: '三元里', en: 'Sanyuanli', x: [] },
-  fxgy: { zh: '飞翔公园', en: 'Feixiang Park', x: [] },
-  bygy: { zh: '白云公园', en: 'Baiyun Park', x: [] },
-  bywhgc: { zh: '白云文化广场', en: 'Baiyun Culture Square', x: [12] },
+  fxgy: { zh: '飞翔公园', en: 'Feixiang Gongyuan', x: [] },
+  bygy: { zh: '白云公园', en: 'Baiyun Gongyuan', x: [] },
+  bywhgc: { zh: '白云文化广场', en: 'Baiyun Wenhua Guangchang', x: [12] },
   xg: { zh: '萧岗', en: 'Xiaogang', x: [] },
   jx: { zh: '江夏', en: 'Jiangxia', x: [] },
   hb: { zh: '黄边', en: 'Huangbian', x: [] },

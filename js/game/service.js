@@ -53,7 +53,7 @@ export class Metro {
   setX(slot, x) { const t = slot.train; t.setPos(x, slot.P.y, slot.side.trackZ); }
   doors(slot, f) { slot.f = f; slot.train.setDoors(slot.side.doorSg, f); this.station.setPSD(slot.side.psd, f); }
   update(dt) {
-    const p = this.ctx.player.position, A = this.ctx.Audio;
+    const p = this.ctx.player.position, A = this.ctx.Audio, seated = !!this.ctx.player.seat;
     if (this.ride && this.ride.phase === 'cruise') return this.cruise(dt);
     let sound = null;
     for (const s of this.slots) {
@@ -76,17 +76,18 @@ export class Metro {
         }
         case 'opening': this.doors(s, 1 - Math.max(0, s.t) / 1.2); if (s.t <= 0) { s.state = 'dwell'; s.t = 10; s.ann = false; } break;
         case 'dwell': {
-          const terminalHold = !nx && aboard, hold = terminalHold || tr.inDoorway(p);
+          const terminalHold = !nx && aboard, hold = terminalHold || (!seated && tr.inDoorway(p));
           if (hold && s.t < 3.2) s.t = 3.2;
           if (!s.ann && s.t < 3.1 && (aboard || onPlat) && !terminalHold) { s.ann = true; Ann.doorsClosing(); A.sfx('doorChime'); }
           if (s.t <= 0) { s.state = 'closing'; s.t = 1.6; A.sfx('doorClose'); A.sfx('psdClose', { volume: 0.7 }); }
           break;
         }
         case 'closing':
-          if (tr.inDoorway(p)) { s.state = 'opening'; s.t = 1.2 * (1 - s.f); s.ann = true; break; }
+          if (!seated && tr.inDoorway(p)) { s.state = 'opening'; s.t = 1.2 * (1 - s.f); s.ann = true; break; }
           this.doors(s, Math.max(0, s.t) / 1.6);
           if (s.t <= 0) {
             this.doors(s, 0); s.state = 'departing'; s.u = 0;
+            if (nx) tr.setMap(s.line, this.station.code, s.step, nx, true); // 关门开出：线路图高亮下一站，LCD“下一站”
             if (aboard && nx) { this.legs++; Ann.depart(s.line, nx, dirKey(s.line, s.step), s.step, this.legs === 1 || this.ride?.line !== s.line); A.sfx('train.tractionStart', { volume: 0.7 }); this.ride = { train: tr, line: s.line, step: s.step, phase: 'out', slot: s, next: nx }; }
           }
           break;

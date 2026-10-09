@@ -1,11 +1,12 @@
 /*
  * 触屏 + 键鼠输入（我的世界 PE 风格）：
- *   左边 45% 区域：按下的位置出现摇杆，推得越远走得越快，推到边 = 跑；
- *   右边：单指拖动转视角，双指捏合缩放（第三人称）；
- *   键盘：WASD/方向键 走，Shift 跑，空格 跳，V 切视角，F 脚印，M 静音；鼠标点画面锁定指针后移动转头。
+ *   左边 45% 区域：按下的位置出现摇杆（鼠标和触摸一样），推得越远走得越快，推到边 = 跑；
+ *   右边：单指/鼠标拖动转视角，双指捏合缩放（第三人称）；
+ *   从摇杆开始的指针绝不会转视角（pointerId 只进 stick，不进 looks）；
+ *   键盘：WASD/方向键 走，Shift 跑，空格 跳，V 切视角，M 静音；在右侧按下后可指针锁定转头。
  */
 export class Input {
-  constructor({ surface, stick, hint, onView, onFoot, onMute, onJump }) {
+  constructor({ surface, stick, hint, onView, onMute, onJump }) {
     this.move = { x: 0, y: 0 }; this.run = false; this.look = { x: 0, y: 0 }; this.pinch = 0; this.jumpQueued = false;
     this.keys = {}; this.stickId = null; this.looks = new Map(); this.pinchDist = 0; this.virtual = null; this.used = false;
     this.stickEl = stick; this.hintEl = hint; this.R = 70;
@@ -18,7 +19,7 @@ export class Input {
     window.addEventListener('keydown', e => {
       if (e.repeat) return; this.keys[e.code] = true; this.used = true;
       if (e.code === 'Space') { this.jumpQueued = true; e.preventDefault(); }
-      if (e.code === 'KeyV') onView(); if (e.code === 'KeyF') onFoot(); if (e.code === 'KeyM') onMute();
+      if (e.code === 'KeyV') onView(); if (e.code === 'KeyM') onMute();
     });
     window.addEventListener('keyup', e => { this.keys[e.code] = false; });
     window.addEventListener('blur', () => { this.keys = {}; });
@@ -27,18 +28,20 @@ export class Input {
   }
   down(e) {
     e.preventDefault(); this.used = true;
-    if (e.pointerType === 'mouse') {
-      if (document.pointerLockElement !== this.surface && this.surface.requestPointerLock) { try { const p = this.surface.requestPointerLock(); if (p && p.catch) p.catch(() => {}); } catch (_) {} }
-      this.looks.set(e.pointerId, { x: e.clientX, y: e.clientY, mouse: true }); return;
-    }
+    // 左半边：摇杆（鼠标 / 触摸统一）。该 pointerId 只驱动移动，绝不进 looks。
     if (e.clientX < innerWidth * 0.45 && this.stickId === null) {
       this.stickId = e.pointerId; this.base = { x: e.clientX, y: e.clientY };
       this.stickEl.hidden = false; this.stickEl.style.left = e.clientX + 'px'; this.stickEl.style.top = e.clientY + 'px';
       this.stickEl.querySelector('.knob').style.transform = ''; this.hintEl.classList.add('off');
-    } else {
-      this.looks.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (this.looks.size === 2) this.pinchDist = this.dist();
+      try { this.surface.setPointerCapture(e.pointerId); } catch (_) {}
+      return;
     }
+    // 右半边：转视角。仅在这里请求指针锁定（摇杆按下不会锁）。
+    if (e.pointerType === 'mouse' && document.pointerLockElement !== this.surface && this.surface.requestPointerLock) {
+      try { const p = this.surface.requestPointerLock(); if (p && p.catch) p.catch(() => {}); } catch (_) {}
+    }
+    this.looks.set(e.pointerId, { x: e.clientX, y: e.clientY, mouse: e.pointerType === 'mouse' });
+    if (this.looks.size === 2) this.pinchDist = this.dist();
     try { this.surface.setPointerCapture(e.pointerId); } catch (_) {}
   }
   dist() { const a = [...this.looks.values()]; return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); }

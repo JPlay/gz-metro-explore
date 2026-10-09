@@ -223,12 +223,22 @@ export function footstep() { stepIndex = (stepIndex + 1) % 4; return sfx('sfx.fo
 /** 合成的柔和提示音（机关咔哒、到达和弦），不需要素材文件 */
 export function blip(kind = 'tick') {
   if (!canPlay()) return;
-  const notes = { tick: [[880, 0.04, 0.05]], settle: [[660, 0.0, 0.25], [990, 0.07, 0.3]], goal: [[523, 0, .4], [659, .12, .4], [784, .24, .5], [1046, .36, .7]], nope: [[330, 0, .18]], tap: [[740, 0, .08]] }[kind] || [];
+  // [频率, 延迟, 长度, 波形, 音量]
+  const notes = { tick: [[880, 0.04, 0.05, 'sine', .12]], settle: [[660, 0.0, 0.25], [990, 0.07, 0.3]], goal: [[523, 0, .4], [659, .12, .4], [784, .24, .5], [1046, .36, .7]], nope: [[330, 0, .18]], tap: [[740, 0, .08]],
+    // 售票 / 闸机 / 座位的小音效（全部合成，不用素材）
+    coin: [[2093, 0, .09, 'triangle', .14], [3136, .035, .16, 'sine', .1], [2637, .09, .22, 'sine', .08]],
+    note: [[420, 0, .12, 'triangle', .1], [520, .07, .1, 'triangle', .08], [1568, .16, .14, 'sine', .08]],
+    whirr: [[180, 0, .35, 'triangle', .07], [240, .1, .3, 'triangle', .06], [300, .22, .2, 'triangle', .05]],
+    drop: [[1568, 0, .1, 'triangle', .14], [1175, .12, .1, 'triangle', .1], [1397, .22, .08, 'triangle', .07]],
+    clink: [[2637, 0, .18, 'sine', .1], [3520, .05, .22, 'sine', .07]],
+    sparkle: [[1319, 0, .22, 'sine', .1], [1760, .07, .22, 'sine', .1], [2637, .14, .35, 'sine', .1], [3520, .21, .4, 'sine', .06]],
+    oops: [[587, 0, .16, 'sine', .14], [440, .13, .26, 'sine', .12]],
+    sit: [[392, 0, .12, 'sine', .14], [294, .08, .18, 'sine', .12]], stand: [[294, 0, .1, 'sine', .12], [440, .08, .16, 'sine', .14]] }[kind] || [];
   const t0 = ctx.currentTime;
-  for (const [f, d, len] of notes) {
+  for (const [f, d, len, type, vol] of notes) {
     const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, t0 + d);
-    g.gain.linearRampToValueAtTime(kind === 'tick' ? 0.12 : 0.22, t0 + d + 0.015);
+    o.type = type || 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, t0 + d);
+    g.gain.linearRampToValueAtTime(vol ?? 0.22, t0 + d + 0.012);
     g.gain.exponentialRampToValueAtTime(0.0008, t0 + d + len);
     o.connect(g); g.connect(buses.ui); o.start(t0 + d); o.stop(t0 + d + len + 0.05);
   }
